@@ -1,0 +1,74 @@
+# ==============================================================================
+# Git Ignore Configuration for RazorGrow AI
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Environment Variables & Secrets (CRITICAL: Never commit credentials)
+# ------------------------------------------------------------------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+server/.env
+client/.env
+client/.env.local
+client/.env.*.local
+
+# Allow tracked template
+!.env.example
+
+# ------------------------------------------------------------------------------
+# 2. Dependency Directories
+# ------------------------------------------------------------------------------
+node_modules/
+*/node_modules/
+client/node_modules/
+
+# ------------------------------------------------------------------------------
+# 3. Build & Distribution Outputs
+# ------------------------------------------------------------------------------
+dist/
+dist-ssr/
+build/
+client/dist/
+*.local
+
+# ------------------------------------------------------------------------------
+# 4. Logs and Debugging
+# ------------------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ------------------------------------------------------------------------------
+# 5. OS and IDE Artifacts
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ------------------------------------------------------------------------------
+# 6. Temporary & Runtime Artifacts
+# ------------------------------------------------------------------------------
+.system_generated/
+.tempmediaStorage/
+server/database.json.backup

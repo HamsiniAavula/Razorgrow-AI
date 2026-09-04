@@ -1,0 +1,1715 @@
+{
+  "products": [
+    {
+      "id": "prod_watch_01",
+      "name": "Classic Watch",
+      "description": "Timeless analog watch with genuine leather strap, sapphire crystal glass, and Japanese quartz movement.",
+      "category": "Watches",
+      "price": 2499,
+      "stock": 24,
+      "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.8,
+      "margin": 0.42,
+      "active": true
+    },
+    {
+      "id": "prod_earbuds_02",
+      "name": "Wireless Earbuds",
+      "description": "Active noise-cancelling Bluetooth 5.3 earbuds with 36hr battery life and sweat-proof design.",
+      "category": "Audio",
+      "price": 1999,
+      "stock": 45,
+      "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.7,
+      "margin": 0.38,
+      "active": true
+    },
+    {
+      "id": "prod_wallet_03",
+      "name": "Leather Wallet",
+      "description": "Handcrafted full-grain bi-fold leather wallet with RFID blocking and 8 card slots.",
+      "category": "Accessories",
+      "price": 1299,
+      "stock": 32,
+      "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.6,
+      "margin": 0.45,
+      "active": true
+    },
+    {
+      "id": "prod_giftbox_04",
+      "name": "Gift Packaging",
+      "description": "Eco-friendly luxury satin gift wrap with custom handwritten greeting card and embossed ribbon.",
+      "category": "Gifts",
+      "price": 199,
+      "stock": 150,
+      "image": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.9,
+      "margin": 0.65,
+      "active": true
+    },
+    {
+      "id": "prod_socks_05",
+      "name": "Performance Socks",
+      "description": "Anti-blister seamless merino-blend athletic socks with arch compression.",
+      "category": "Apparel",
+      "price": 399,
+      "stock": 80,
+      "image": "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.5,
+      "margin": 0.55,
+      "active": true
+    },
+    {
+      "id": "prod_shoes_06",
+      "name": "Running Shoes",
+      "description": "Responsive carbon-infused foam running shoes engineered for daily training and distance races.",
+      "category": "Footwear",
+      "price": 2999,
+      "stock": 18,
+      "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.8,
+      "margin": 0.4,
+      "active": true
+    },
+    {
+      "id": "prod_mouse_07",
+      "name": "Wireless Mouse",
+      "description": "Ergonomic multi-device silent optical wireless mouse with rechargeable battery.",
+      "category": "Electronics",
+      "price": 799,
+      "stock": 50,
+      "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.4,
+      "margin": 0.35,
+      "active": true
+    },
+    {
+      "id": "prod_laptop_08",
+      "name": "Laptop",
+      "description": "Ultra-slim 14-inch IPS display laptop with fast SSD storage, 8-core CPU, and backlit keyboard.",
+      "category": "Electronics",
+      "price": 4999,
+      "stock": 10,
+      "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.6,
+      "margin": 0.25,
+      "active": true
+    },
+    {
+      "id": "prod_sunscreen_09",
+      "name": "Sunscreen",
+      "description": "Broad spectrum SPF 50 PA++++ matte finish lightweight sunscreen with niacinamide and zinc oxide.",
+      "category": "Beauty",
+      "price": 599,
+      "stock": 65,
+      "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.7,
+      "margin": 0.5,
+      "active": true
+    },
+    {
+      "id": "prod_skincare_10",
+      "name": "Skincare Kit",
+      "description": "Complete 3-step restorative skincare routine: gentle hydra-cleanser, balancing toner, and ceramide cream.",
+      "category": "Beauty",
+      "price": 1499,
+      "stock": 28,
+      "image": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.8,
+      "margin": 0.48,
+      "active": true
+    },
+    {
+      "id": "prod_backpack_11",
+      "name": "Backpack",
+      "description": "Water-resistant commuter backpack with dedicated 15.6-inch laptop compartment and hidden anti-theft pocket.",
+      "category": "Bags",
+      "price": 1799,
+      "stock": 30,
+      "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.5,
+      "margin": 0.36,
+      "active": true
+    },
+    {
+      "id": "prod_premiumpack_12",
+      "name": "Premium Gift Box",
+      "description": "Handcrafted velvet-lined wooden keepsake box with embossed brass clasp and magnetic closure.",
+      "category": "Gifts",
+      "price": 899,
+      "stock": 15,
+      "image": "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80",
+      "rating": 4.9,
+      "margin": 0.6,
+      "active": true
+    }
+  ],
+  "coupons": [
+    {
+      "id": "coup_save10",
+      "code": "SAVE10",
+      "type": "percentage",
+      "value": 10,
+      "minimum_order": 1000,
+      "max_discount": 500,
+      "eligible_categories": [
+        "*"
+      ],
+      "active": true,
+      "expires_at": "2027-12-31T23:59:59Z",
+      "description": "10% off on orders above ₹1000 (up to ₹500)"
+    },
+    {
+      "id": "coup_flat300",
+      "code": "FLAT300",
+      "type": "flat",
+      "value": 300,
+      "minimum_order": 2500,
+      "max_discount": 300,
+      "eligible_categories": [
+        "*"
+      ],
+      "active": true,
+      "expires_at": "2027-12-31T23:59:59Z",
+      "description": "Flat ₹300 off on orders above ₹2500"
+    },
+    {
+      "id": "coup_welcome15",
+      "code": "WELCOME15",
+      "type": "percentage",
+      "value": 15,
+      "minimum_order": 500,
+      "max_discount": 600,
+      "eligible_categories": [
+        "*"
+      ],
+      "active": true,
+      "expires_at": "2027-12-31T23:59:59Z",
+      "description": "15% off for new customers (exceeds merchant 10% policy cap)"
+    }
+  ],
+  "policies": {
+    "id": "policy_default",
+    "merchant_id": "merchant_acme",
+    "merchant_name": "Acme Commerce",
+    "max_transaction_amount": 5000,
+    "max_upsell_amount": 500,
+    "max_discount_percent": 10,
+    "customer_approval_required": true,
+    "allow_out_of_stock": false,
+    "allow_auto_refund": false,
+    "updated_at": "2026-09-04T14:47:59.592Z"
+  },
+  "opportunities": [
+    {
+      "id": "opp_shoes_socks",
+      "product_id": "prod_shoes_06",
+      "product_name": "Running Shoes",
+      "recommended_product_id": "prod_socks_05",
+      "recommended_product_name": "Performance Socks",
+      "upsell_price": 399,
+      "reason": "High co-purchase affinity. Runners consistently bundle moisture-wicking anti-blister socks.",
+      "current_attachment_rate": 12,
+      "benchmark_attachment_rate": 27,
+      "estimated_monthly_revenue": 38400,
+      "status": "ACTIVE",
+      "activated_at": "2026-09-01T10:00:00Z"
+    },
+    {
+      "id": "opp_laptop_mouse",
+      "product_id": "prod_laptop_08",
+      "product_name": "Laptop",
+      "recommended_product_id": "prod_mouse_07",
+      "recommended_product_name": "Wireless Mouse",
+      "upsell_price": 799,
+      "reason": "78% of laptop buyers purchase an external wireless mouse within 14 days of acquisition.",
+      "current_attachment_rate": 9,
+      "benchmark_attachment_rate": 34,
+      "estimated_monthly_revenue": 21600,
+      "status": "PENDING_ACTIVATION",
+      "activated_at": null
+    },
+    {
+      "id": "opp_skincare_sunscreen",
+      "product_id": "prod_skincare_10",
+      "product_name": "Skincare Kit",
+      "recommended_product_id": "prod_sunscreen_09",
+      "recommended_product_name": "Sunscreen",
+      "upsell_price": 599,
+      "reason": "Dermatological bundle pairing. Daily SPF recommendation increases routine retention by 62%.",
+      "current_attachment_rate": 15,
+      "benchmark_attachment_rate": 38,
+      "estimated_monthly_revenue": 17200,
+      "status": "PENDING_ACTIVATION",
+      "activated_at": null
+    },
+    {
+      "id": "opp_watch_giftbox",
+      "product_id": "prod_watch_01",
+      "product_name": "Classic Watch",
+      "recommended_product_id": "prod_giftbox_04",
+      "recommended_product_name": "Gift Packaging",
+      "upsell_price": 199,
+      "reason": "42% of classic watch orders are purchased as gifts for anniversaries and birthdays.",
+      "current_attachment_rate": 19,
+      "benchmark_attachment_rate": 42,
+      "estimated_monthly_revenue": 14800,
+      "status": "ACTIVE",
+      "activated_at": "2026-09-02T14:15:00Z"
+    },
+    {
+      "id": "opp_backpack_wallet",
+      "product_id": "prod_backpack_11",
+      "product_name": "Backpack",
+      "recommended_product_id": "prod_wallet_03",
+      "recommended_product_name": "Leather Wallet",
+      "upsell_price": 1299,
+      "reason": "Travel everyday carry pairing. Bundling essentials drives higher cart sizes for professionals.",
+      "current_attachment_rate": 8,
+      "benchmark_attachment_rate": 22,
+      "estimated_monthly_revenue": 16500,
+      "status": "PENDING_ACTIVATION",
+      "activated_at": null
+    },
+    {
+      "id": "opp_earbuds_packaging",
+      "product_id": "prod_earbuds_02",
+      "product_name": "Wireless Earbuds",
+      "recommended_product_id": "prod_giftbox_04",
+      "recommended_product_name": "Gift Packaging",
+      "upsell_price": 199,
+      "reason": "Popular holiday and graduation gift choice with rapid impulse attachment rate.",
+      "current_attachment_rate": 14,
+      "benchmark_attachment_rate": 31,
+      "estimated_monthly_revenue": 9800,
+      "status": "ACTIVE",
+      "activated_at": "2026-09-03T11:20:00Z"
+    },
+    {
+      "id": "opp_mouse_packaging",
+      "product_id": "prod_mouse_07",
+      "product_name": "Wireless Mouse",
+      "recommended_product_id": "prod_socks_05",
+      "recommended_product_name": "Performance Socks",
+      "upsell_price": 399,
+      "reason": "Seasonal lifestyle bundle promotion.",
+      "current_attachment_rate": 5,
+      "benchmark_attachment_rate": 16,
+      "estimated_monthly_revenue": 8100,
+      "status": "PENDING_ACTIVATION",
+      "activated_at": null
+    }
+  ],
+  "customer": {
+    "id": "cust_demo_01",
+    "name": "Arjun Verma",
+    "email": "arjun.verma@example.com",
+    "phone": "+919876543210",
+    "preferences": {
+      "favorite_categories": [
+        "Watches",
+        "Footwear",
+        "Electronics"
+      ],
+      "budget_range": "₹2000 - ₹5000"
+    },
+    "purchase_history": [
+      {
+        "order_id": "ord_hist_99",
+        "date": "2026-08-15",
+        "product": "Wireless Earbuds",
+        "amount": 1999
+      }
+    ]
+  },
+  "orders": [
+    {
+      "id": "ord_1788539489284_598",
+      "created_at": "2026-09-04T16:31:29.284Z",
+      "customer_id": "cust_demo_01",
+      "customer_name": "Arjun Verma",
+      "customer_email": "arjun.verma@example.com",
+      "customer_phone": "+919876543210",
+      "items": [
+        {
+          "id": "prod_watch_01",
+          "name": "Classic Watch",
+          "price": 2499,
+          "quantity": 1,
+          "is_upsell": false
+        }
+      ],
+      "subtotal": 2499,
+      "upsell_amount": 0,
+      "discount": 249,
+      "coupon_code": "SAVE10",
+      "total": 2250,
+      "status": "PAYMENT_PENDING",
+      "razorpay_order_id": "order_TY1hvdUaio3PbS",
+      "razorpay_payment_id": null,
+      "ai_influenced": true,
+      "ai_attributed_revenue": 0
+    },
+    {
+      "id": "ord_1788539336387_450",
+      "created_at": "2026-09-04T16:28:56.387Z",
+      "customer_id": "cust_demo_01",
+      "customer_name": "Arjun Verma",
+      "customer_email": "arjun.verma@example.com",
+      "customer_phone": "+919876543210",
+      "items": [
+        {
+          "id": "prod_watch_01",
+          "name": "Classic Watch",
+          "price": 2499,
+          "quantity": 1,
+          "is_upsell": false
+        },
+        {
+          "id": "prod_giftbox_04",
+          "name": "Gift Packaging",
+          "price": 199,
+          "quantity": 1,
+          "is_upsell": true
+        }
+      ],
+      "subtotal": 2698,
+      "upsell_amount": 199,
+      "discount": 269,
+      "coupon_code": "SAVE10",
+      "total": 2429,
+      "status": "PAYMENT_PENDING",
+      "razorpay_order_id": "order_TY1fEvkuECFYiu",
+      "razorpay_payment_id": null,
+      "ai_influenced": true,
+      "ai_attributed_revenue": 0
+    },
+    {
+      "id": "ord_demo_1024",
+      "customer_id": "cust_demo_01",
+      "customer_name": "Arjun Verma",
+      "items": [
+        {
+          "id": "prod_watch_01",
+          "name": "Classic Watch",
+          "price": 2499,
+          "quantity": 1,
+          "is_upsell": false
+        },
+        {
+          "id": "prod_giftbox_04",
+          "name": "Gift Packaging",
+          "price": 199,
+          "quantity": 1,
+          "is_upsell": true
+        }
+      ],
+      "subtotal": 2698,
+      "upsell_amount": 199,
+      "discount": 269,
+      "coupon_code": "SAVE10",
+      "total": 2429,
+      "status": "PAID",
+      "razorpay_order_id": "order_test_demo1024",
+      "razorpay_payment_id": "pay_test_capt_1024",
+      "ai_influenced": true,
+      "ai_attributed_revenue": 2429,
+      "created_at": "2026-09-04T12:47:59.593Z"
+    },
+    {
+      "id": "ord_demo_1023",
+      "customer_id": "cust_demo_02",
+      "customer_name": "Priya Sharma",
+      "items": [
+        {
+          "id": "prod_shoes_06",
+          "name": "Running Shoes",
+          "price": 2999,
+          "quantity": 1,
+          "is_upsell": false
+        },
+        {
+          "id": "prod_socks_05",
+          "name": "Performance Socks",
+          "price": 399,
+          "quantity": 1,
+          "is_upsell": true
+        }
+      ],
+      "subtotal": 3398,
+      "upsell_amount": 399,
+      "discount": 300,
+      "coupon_code": "FLAT300",
+      "total": 3098,
+      "status": "PAID",
+      "razorpay_order_id": "order_test_demo1023",
+      "razorpay_payment_id": "pay_test_capt_1023",
+      "ai_influenced": true,
+      "ai_attributed_revenue": 3098,
+      "created_at": "2026-09-04T09:47:59.593Z"
+    },
+    {
+      "id": "ord_demo_1022",
+      "customer_id": "cust_demo_03",
+      "customer_name": "Vikram Mehta",
+      "items": [
+        {
+          "id": "prod_skincare_10",
+          "name": "Skincare Kit",
+          "price": 1499,
+          "quantity": 1,
+          "is_upsell": false
+        }
+      ],
+      "subtotal": 1499,
+      "upsell_amount": 0,
+      "discount": 149,
+      "coupon_code": "SAVE10",
+      "total": 1350,
+      "status": "PAYMENT_FAILED",
+      "razorpay_order_id": "order_test_demo1022",
+      "razorpay_payment_id": "pay_test_fail_1022",
+      "ai_influenced": true,
+      "ai_attributed_revenue": 0,
+      "created_at": "2026-09-04T06:47:59.593Z"
+    },
+    {
+      "id": "ord_demo_1021",
+      "customer_id": "cust_demo_04",
+      "customer_name": "Sneha Patel",
+      "items": [
+        {
+          "id": "prod_earbuds_02",
+          "name": "Wireless Earbuds",
+          "price": 1999,
+          "quantity": 1,
+          "is_upsell": false
+        },
+        {
+          "id": "prod_giftbox_04",
+          "name": "Gift Packaging",
+          "price": 199,
+          "quantity": 1,
+          "is_upsell": true
+        }
+      ],
+      "subtotal": 2198,
+      "upsell_amount": 199,
+      "discount": 219,
+      "coupon_code": "SAVE10",
+      "total": 1979,
+      "status": "PAID",
+      "razorpay_order_id": "order_test_demo1021",
+      "razorpay_payment_id": "pay_test_capt_1021",
+      "ai_influenced": true,
+      "ai_attributed_revenue": 1979,
+      "created_at": "2026-09-04T02:47:59.593Z"
+    }
+  ],
+  "ai_actions": [
+    {
+      "id": "act_1788539489483_9856",
+      "timestamp": "2026-09-04T16:31:29.483Z",
+      "confidence": 1,
+      "order_id": "ord_1788539489284_598",
+      "session_id": "session_checkout",
+      "action_type": "RAZORPAY_ORDER_CREATED",
+      "status": "SUCCESS",
+      "reason": "Created Razorpay Test Mode order for ₹2250 (225000 paise).",
+      "input_summary": "Order: ord_1788539489284_598, Amount: ₹2250, Items: 1",
+      "output_summary": "Razorpay Order ID: order_TY1hvdUaio3PbS",
+      "evidence": "Deterministic total: subtotal ₹2499 - coupon ₹249 = ₹2250",
+      "policy_checks": {
+        "amount_in_paise": 225000,
+        "currency": "INR"
+      }
+    },
+    {
+      "id": "act_1788539489278_272",
+      "timestamp": "2026-09-04T16:31:29.278Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_checkout",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539489274_5376",
+      "timestamp": "2026-09-04T16:31:29.274Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_checkout",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539454768_6093",
+      "timestamp": "2026-09-04T16:30:54.768Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539454763_2547",
+      "timestamp": "2026-09-04T16:30:54.763Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539454755_2723",
+      "timestamp": "2026-09-04T16:30:54.756Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539454501_2971",
+      "timestamp": "2026-09-04T16:30:54.501Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539454491_7182",
+      "timestamp": "2026-09-04T16:30:54.492Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539454488_9722",
+      "timestamp": "2026-09-04T16:30:54.488Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539363550_1251",
+      "timestamp": "2026-09-04T16:29:23.550Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539363541_6851",
+      "timestamp": "2026-09-04T16:29:23.541Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539363536_1671",
+      "timestamp": "2026-09-04T16:29:23.536Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539363518_8230",
+      "timestamp": "2026-09-04T16:29:23.518Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539363515_3980",
+      "timestamp": "2026-09-04T16:29:23.515Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539363511_7025",
+      "timestamp": "2026-09-04T16:29:23.511Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539363494_8596",
+      "timestamp": "2026-09-04T16:29:23.494Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539363491_396",
+      "timestamp": "2026-09-04T16:29:23.491Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539363487_4663",
+      "timestamp": "2026-09-04T16:29:23.487Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539363421_9713",
+      "timestamp": "2026-09-04T16:29:23.421Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539363418_5180",
+      "timestamp": "2026-09-04T16:29:23.418Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539363415_7117",
+      "timestamp": "2026-09-04T16:29:23.415Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539354171_3901",
+      "timestamp": "2026-09-04T16:29:14.171Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539354168_1101",
+      "timestamp": "2026-09-04T16:29:14.168Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539354165_2365",
+      "timestamp": "2026-09-04T16:29:14.165Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539354054_9964",
+      "timestamp": "2026-09-04T16:29:14.054Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539354051_7381",
+      "timestamp": "2026-09-04T16:29:14.051Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539354047_8842",
+      "timestamp": "2026-09-04T16:29:14.047Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539354019_243",
+      "timestamp": "2026-09-04T16:29:14.019Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539354016_5808",
+      "timestamp": "2026-09-04T16:29:14.016Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539354012_3837",
+      "timestamp": "2026-09-04T16:29:14.012Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539352493_7137",
+      "timestamp": "2026-09-04T16:29:12.493Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539352487_351",
+      "timestamp": "2026-09-04T16:29:12.487Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539352478_2401",
+      "timestamp": "2026-09-04T16:29:12.478Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539336775_4124",
+      "timestamp": "2026-09-04T16:28:56.775Z",
+      "confidence": 1,
+      "order_id": "ord_1788539336387_450",
+      "session_id": "session_checkout",
+      "action_type": "RAZORPAY_ORDER_CREATED",
+      "status": "SUCCESS",
+      "reason": "Created Razorpay Test Mode order for ₹2429 (242900 paise).",
+      "input_summary": "Order: ord_1788539336387_450, Amount: ₹2429, Items: 2",
+      "output_summary": "Razorpay Order ID: order_TY1fEvkuECFYiu",
+      "evidence": "Deterministic total: subtotal ₹2698 - coupon ₹269 = ₹2429",
+      "policy_checks": {
+        "amount_in_paise": 242900,
+        "currency": "INR"
+      }
+    },
+    {
+      "id": "act_1788539336385_1887",
+      "timestamp": "2026-09-04T16:28:56.385Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_checkout",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹269. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹269. Final cart amount: ₹2429",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 269
+      }
+    },
+    {
+      "id": "act_1788539336381_4536",
+      "timestamp": "2026-09-04T16:28:56.381Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_checkout",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2698 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2698, Evaluated: SAVE10(VALID), FLAT300(BLOCKED), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹269",
+      "evidence": "SAVE10: status=VALID, discount=₹269 | FLAT300: status=BLOCKED, discount=₹300 | WELCOME15: status=BLOCKED, discount=₹404",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹269 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "BLOCKED",
+            "reason": "Discount of 11.1% breaches merchant maximum discount policy of 10%."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788539102703_1120",
+      "timestamp": "2026-09-04T16:25:02.703Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Cart deterministically computed: subtotal=₹2499, discount=₹249, total=₹2250.",
+      "input_summary": "1 items evaluated",
+      "output_summary": "Subtotal: ₹2499, Coupon: SAVE10 (-₹249), Final: ₹2250",
+      "evidence": "DB verified prices: Classic Watch (₹2499)",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "cart_subtotal": 2499,
+        "max_discount_percent": 10,
+        "effective_discount_percent": 0,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788539102701_5572",
+      "timestamp": "2026-09-04T16:25:02.701Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹249. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹249. Final cart amount: ₹2250",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 249
+      }
+    },
+    {
+      "id": "act_1788539102699_6811",
+      "timestamp": "2026-09-04T16:25:02.699Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_cart",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2499 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2499, Evaluated: SAVE10(VALID), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹249",
+      "evidence": "SAVE10: status=VALID, discount=₹249 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹374",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹249 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹2499 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1011",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "REVENUE_ATTRIBUTED",
+      "status": "SUCCESS",
+      "reason": "AI successfully attributed ₹2429 captured revenue to merchant dashboard.",
+      "confidence": 1,
+      "input_summary": "Captured amount: ₹2429. AI influenced: TRUE",
+      "output_summary": "Merchant AI revenue credited: +₹2429.",
+      "evidence": "Order status is PAID. Only captured transactions credit AI revenue.",
+      "policy_checks": {
+        "captured_status_verified": true
+      },
+      "timestamp": "2026-09-04T12:47:59.593Z"
+    },
+    {
+      "id": "act_1010",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "PAYMENT_VERIFIED",
+      "status": "SUCCESS",
+      "reason": "Server-side HMAC-SHA256 signature verified against Razorpay Key Secret.",
+      "confidence": 1,
+      "input_summary": "Payment ID: pay_test_capt_1024, Signature verified: TRUE",
+      "output_summary": "Payment status: CAPTURED. Order marked as PAID.",
+      "evidence": "Cryptographic hash match confirmed on backend.",
+      "policy_checks": {
+        "signature_valid": true,
+        "no_replay_attack": true
+      },
+      "timestamp": "2026-09-04T12:46:59.593Z"
+    },
+    {
+      "id": "act_1009",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "RAZORPAY_ORDER_CREATED",
+      "status": "SUCCESS",
+      "reason": "Created Razorpay Test Mode order for ₹2429 (242900 paise).",
+      "confidence": 1,
+      "input_summary": "Amount: 242900 paise, Currency: INR",
+      "output_summary": "Razorpay Order ID: order_test_demo1024",
+      "evidence": "Razorpay API response received with status 'created'.",
+      "policy_checks": {
+        "amount_matches_cart": true
+      },
+      "timestamp": "2026-09-04T12:43:59.593Z"
+    },
+    {
+      "id": "act_1008",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Applied SAVE10 saving ₹269. Final payable amount: ₹2429.",
+      "confidence": 1,
+      "input_summary": "Subtotal: ₹2698, Coupon: SAVE10",
+      "output_summary": "Total: ₹2429. Discount: ₹269.",
+      "evidence": "Discount calculation: floor(2698 * 0.10) = 269.",
+      "policy_checks": {
+        "discount_within_policy": true
+      },
+      "timestamp": "2026-09-04T12:41:59.593Z"
+    },
+    {
+      "id": "act_1007",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated SAVE10, FLAT300, and WELCOME15 against merchant 10% maximum discount policy.",
+      "confidence": 1,
+      "input_summary": "Coupons: SAVE10 (10%), FLAT300 (₹300), WELCOME15 (15%)",
+      "output_summary": "WELCOME15 blocked (15% > 10% cap). SAVE10 yields ₹269. FLAT300 valid but SAVE10 optimal.",
+      "evidence": "Deterministic coupon optimization engine execution log.",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "welcome15_allowed": false,
+        "save10_allowed": true
+      },
+      "timestamp": "2026-09-04T12:40:59.593Z"
+    },
+    {
+      "id": "act_1006",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "CART_UPDATED",
+      "status": "SUCCESS",
+      "reason": "Classic Watch (₹2499) and Gift Packaging (₹199) bundled into cart. Subtotal: ₹2698.",
+      "confidence": 1,
+      "input_summary": "Items: prod_watch_01, prod_giftbox_04",
+      "output_summary": "Cart subtotal calculated deterministically: ₹2698.",
+      "evidence": "DB verified item prices: ₹2499 + ₹199 = ₹2698.",
+      "policy_checks": {
+        "max_transaction_limit": 5000,
+        "current_subtotal": 2698,
+        "result": "PASS"
+      },
+      "timestamp": "2026-09-04T12:39:59.593Z"
+    },
+    {
+      "id": "act_1005",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "CUSTOMER_APPROVED",
+      "status": "SUCCESS",
+      "reason": "Customer explicitly clicked 'Yes, add it' for Gift Packaging (₹199).",
+      "confidence": 1,
+      "input_summary": "Customer authorization button click: TRUE",
+      "output_summary": "Upsell authorized by customer. Proceeding to cart modification.",
+      "evidence": "Customer consent timestamp recorded. Merchant policy rule enforced.",
+      "policy_checks": {
+        "customer_approval_required": true,
+        "customer_approved": true
+      },
+      "timestamp": "2026-09-04T12:38:59.593Z"
+    },
+    {
+      "id": "act_1004",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "UPSELL_PROPOSED",
+      "status": "SUCCESS",
+      "reason": "Agent re-planning selected valid alternative Gift Packaging (₹199). Complies with ₹500 cap.",
+      "confidence": 0.95,
+      "input_summary": "Fallback candidate search: gifts <= ₹500",
+      "output_summary": "Proposed: Gift Packaging (₹199) with 42% benchmark attachment rate.",
+      "evidence": "Historical attachment rate: 42% for watch gift purchases.",
+      "policy_checks": {
+        "max_upsell_allowed": 500,
+        "proposed_price": 199,
+        "result": "PASS"
+      },
+      "timestamp": "2026-09-04T12:36:59.593Z"
+    },
+    {
+      "id": "act_1003",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "UPSELL_BLOCKED",
+      "status": "BLOCKED",
+      "reason": "Premium Gift Box (₹899) exceeds merchant maximum upsell policy limit of ₹500.",
+      "confidence": 0.98,
+      "input_summary": "Complementary candidate: Premium Gift Box (₹899)",
+      "output_summary": "Action BLOCKED: ₹899 > ₹500 merchant policy ceiling.",
+      "evidence": "Policy check: max_upsell_amount = ₹500. Proposed upsell = ₹899.",
+      "policy_checks": {
+        "max_upsell_allowed": 500,
+        "proposed_price": 899,
+        "result": "FAIL"
+      },
+      "timestamp": "2026-09-04T12:35:59.593Z"
+    },
+    {
+      "id": "act_1002",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "PRODUCT_RECOMMENDED",
+      "status": "SUCCESS",
+      "reason": "Classic Watch matches gift intent and fits under ₹3000 budget with 4.8★ rating.",
+      "confidence": 0.96,
+      "input_summary": "Catalog search: price <= 3000, category in ['Watches', 'Accessories']",
+      "output_summary": "Recommended: Classic Watch (₹2499, Stock: 24)",
+      "evidence": "Database stock verified: 24 units. Margin: 42%.",
+      "policy_checks": {
+        "stock_available": true,
+        "price_within_bounds": true
+      },
+      "timestamp": "2026-09-04T12:33:59.593Z"
+    },
+    {
+      "id": "act_1001",
+      "order_id": "ord_demo_1024",
+      "session_id": "sess_demo_1024",
+      "action_type": "INTENT_DETECTED",
+      "status": "SUCCESS",
+      "reason": "Customer expressed need for birthday gift under ₹3000.",
+      "confidence": 0.94,
+      "input_summary": "I need a birthday gift for my brother under ₹3000.",
+      "output_summary": "Intent: GIFT_PURCHASE, Category: Watches/Accessories, Budget: ₹3000",
+      "evidence": "Query matched birthday gift intent; extracted budget constraint ₹3000.",
+      "policy_checks": {
+        "budget_respected": true
+      },
+      "timestamp": "2026-09-04T12:32:59.593Z"
+    }
+  ],
+  "payment_events": [
+    {
+      "id": "pevt_1024_01",
+      "order_id": "ord_demo_1024",
+      "razorpay_event_id": "event_demo_capt_1024",
+      "event_type": "payment.captured",
+      "status": "SUCCESS",
+      "amount": 242900,
+      "error": null,
+      "timestamp": "2026-09-04T12:47:59.593Z"
+    },
+    {
+      "id": "pevt_1023_01",
+      "order_id": "ord_demo_1023",
+      "razorpay_event_id": "event_demo_capt_1023",
+      "event_type": "payment.captured",
+      "status": "SUCCESS",
+      "amount": 309800,
+      "error": null,
+      "timestamp": "2026-09-04T09:47:59.593Z"
+    },
+    {
+      "id": "pevt_1022_01",
+      "order_id": "ord_demo_1022",
+      "razorpay_event_id": "event_demo_fail_1022",
+      "event_type": "payment.failed",
+      "status": "FAILED",
+      "amount": 135000,
+      "error": "BAD_REQUEST_ERROR: Payment processing cancelled by user or test card declined",
+      "timestamp": "2026-09-04T06:47:59.593Z"
+    }
+  ],
+  "stats": {
+    "total_revenue": 842350,
+    "ai_attributed_revenue": 126400,
+    "aov": 2174,
+    "ai_upsell_rate": 18.6,
+    "successful_orders": 428,
+    "active_opportunities": 7,
+    "monthly_trend": [
+      {
+        "month": "Mar",
+        "total": 610000,
+        "ai": 72000
+      },
+      {
+        "month": "Apr",
+        "total": 680000,
+        "ai": 89000
+      },
+      {
+        "month": "May",
+        "total": 725000,
+        "ai": 98000
+      },
+      {
+        "month": "Jun",
+        "total": 760000,
+        "ai": 106000
+      },
+      {
+        "month": "Jul",
+        "total": 795000,
+        "ai": 115000
+      },
+      {
+        "month": "Aug",
+        "total": 842350,
+        "ai": 126400
+      }
+    ],
+    "upsell_funnel": {
+      "recommendations_shown": 1420,
+      "upsells_proposed": 860,
+      "upsells_accepted": 395,
+      "successful_payments": 368
+    },
+    "upsell_performance": [
+      {
+        "product": "Running Shoes",
+        "upsell": "Performance Socks",
+        "proposed": 310,
+        "accepted": 142,
+        "conversion": "45.8%",
+        "revenue": 56658
+      },
+      {
+        "product": "Classic Watch",
+        "upsell": "Gift Packaging",
+        "proposed": 245,
+        "accepted": 118,
+        "conversion": "48.1%",
+        "revenue": 23482
+      },
+      {
+        "product": "Wireless Earbuds",
+        "upsell": "Gift Packaging",
+        "proposed": 180,
+        "accepted": 76,
+        "conversion": "42.2%",
+        "revenue": 15124
+      },
+      {
+        "product": "Laptop",
+        "upsell": "Wireless Mouse",
+        "proposed": 125,
+        "accepted": 59,
+        "conversion": "47.2%",
+        "revenue": 47141
+      }
+    ]
+  }
+}
