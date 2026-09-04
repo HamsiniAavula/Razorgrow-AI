@@ -35,7 +35,8 @@ export default function MerchantDashboard({
   onActivateOpportunity,
   onUpdatePolicies,
   isActivating,
-  isUpdating
+  isUpdating,
+  onRefresh
 }) {
   const [activeTab, setActiveTab] = useState('overview');
 
@@ -112,7 +113,7 @@ export default function MerchantDashboard({
           />
         )}
 
-        {activeTab === 'a2a' && <A2ASessionsTab />}
+        {activeTab === 'a2a' && <A2ASessionsTab onRefresh={onRefresh} />}
 
         {activeTab === 'opportunities' && (
           <OpportunitiesTab

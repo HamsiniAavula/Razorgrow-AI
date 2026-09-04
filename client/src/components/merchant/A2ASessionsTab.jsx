@@ -14,7 +14,7 @@ const INTENTS = [
   { label: 'Premium tech ₹5000', intent: 'I want the best electronics available', budget: 5000, prefs: ['Electronics', 'Audio'] },
 ];
 
-export default function A2ASessionsTab() {
+export default function A2ASessionsTab({ onRefresh }) {
   const [sessions, setSessions] = useState([]);
   const [manifest, setManifest] = useState(null);
   const [liveSteps, setLiveSteps] = useState([]);
@@ -124,7 +124,11 @@ export default function A2ASessionsTab() {
               setLiveSteps(prev => [...prev, parsed]);
             } else if (eventType === 'done') {
               setDone(parsed);
-              setTimeout(loadSessions, 500);
+              // Immediately refresh all merchant dashboard tabs (Orders, Payments, Audit, Activity)
+              setTimeout(() => {
+                loadSessions();
+                if (onRefresh) onRefresh();
+              }, 500);
             }
           } catch { /* ignore */ }
         }

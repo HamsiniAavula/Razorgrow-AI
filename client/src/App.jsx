@@ -85,6 +85,10 @@ export default function App() {
 
   useEffect(() => {
     fetchData();
+    // Live-poll every 10 seconds so Orders, Payments, Audit, Activity stay
+    // current when A2A buyers, webhooks, or other server-side actions create data
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
   }, [fetchData]);
 
   // Recalculate cart deterministically on the server whenever items change
@@ -257,6 +261,7 @@ export default function App() {
           onUpdatePolicies={handleUpdatePolicies}
           isActivating={isActivating}
           isUpdating={isUpdatingPolicies}
+          onRefresh={fetchData}
         />
       ) : (
         <CustomerAssistant
