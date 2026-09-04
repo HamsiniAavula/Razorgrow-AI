@@ -8,7 +8,8 @@ import {
   BarChart3,
   Tag,
   ShieldCheck,
-  FileText
+  FileText,
+  Bot
 } from 'lucide-react';
 
 import OverviewTab from './OverviewTab';
@@ -20,6 +21,7 @@ import AnalyticsTab from './AnalyticsTab';
 import CouponsTab from './CouponsTab';
 import PoliciesTab from './PoliciesTab';
 import AuditLedgerTab from './AuditLedgerTab';
+import A2ASessionsTab from './A2ASessionsTab';
 
 export default function MerchantDashboard({
   stats,
@@ -39,6 +41,7 @@ export default function MerchantDashboard({
 
   const menuItems = [
     { id: 'overview', label: 'Overview', icon: <LayoutDashboard size={18} /> },
+    { id: 'a2a', label: 'AI Buyers', icon: <Bot size={18} />, badge: 0, highlight: true },
     { id: 'opportunities', label: 'Revenue Opportunities', icon: <Sparkles size={18} />, badge: opportunities.filter(o => o.status !== 'ACTIVE').length },
     { id: 'activity', label: 'AI Activity', icon: <Activity size={18} /> },
     { id: 'orders', label: 'Orders', icon: <ShoppingBag size={18} /> },
@@ -67,6 +70,7 @@ export default function MerchantDashboard({
               type="button"
               className={`sidebar-item ${activeTab === item.id ? 'active' : ''}`}
               onClick={() => setActiveTab(item.id)}
+              style={item.highlight && activeTab !== item.id ? { borderLeft: '3px solid #7c3aed', paddingLeft: 'calc(0.75rem - 3px)' } : {}}
             >
               {item.icon}
               <span style={{ flex: 1 }}>{item.label}</span>
@@ -81,6 +85,9 @@ export default function MerchantDashboard({
                 }}>
                   {item.badge}
                 </span>
+              )}
+              {item.highlight && (
+                <span style={{ fontSize: '0.6rem', background: '#7c3aed', color: 'white', padding: '0.05rem 0.3rem', borderRadius: '4px', fontWeight: 700 }}>NEW</span>
               )}
             </button>
           ))}
@@ -104,6 +111,8 @@ export default function MerchantDashboard({
             onNavigateTab={setActiveTab}
           />
         )}
+
+        {activeTab === 'a2a' && <A2ASessionsTab />}
 
         {activeTab === 'opportunities' && (
           <OpportunitiesTab

@@ -27,7 +27,8 @@ class Database {
       orders: [],
       ai_actions: [],
       payment_events: [],
-      stats: {}
+      stats: {},
+      a2a_sessions: []
     };
     this.init();
   }
@@ -62,7 +63,8 @@ class Database {
       orders: JSON.parse(JSON.stringify(seedOrders)),
       ai_actions: JSON.parse(JSON.stringify(seedAiActions)),
       payment_events: JSON.parse(JSON.stringify(seedPaymentEvents)),
-      stats: JSON.parse(JSON.stringify(seedStats))
+      stats: JSON.parse(JSON.stringify(seedStats)),
+      a2a_sessions: []
     };
     this.save();
   }
@@ -247,6 +249,31 @@ class Database {
 
   getCustomer() {
     return this.data.customer;
+  }
+
+  // A2A Sessions (Agent-to-Agent Commerce)
+  getA2ASessions() {
+    if (!this.data.a2a_sessions) this.data.a2a_sessions = [];
+    return this.data.a2a_sessions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  }
+
+  addA2ASession(session) {
+    if (!this.data.a2a_sessions) this.data.a2a_sessions = [];
+    const newSession = {
+      id: `a2a_${Date.now()}_${Math.floor(Math.random() * 10000)}`,
+      created_at: new Date().toISOString(),
+      ...session
+    };
+    this.data.a2a_sessions.unshift(newSession);
+    // Also increment A2A revenue stats
+    if (!this.data.stats.a2a_revenue) this.data.stats.a2a_revenue = 0;
+    if (!this.data.stats.a2a_sessions_count) this.data.stats.a2a_sessions_count = 0;
+    if (session.status === 'COMPLETED' && session.total_inr) {
+      this.data.stats.a2a_revenue += session.total_inr;
+      this.data.stats.a2a_sessions_count += 1;
+    }
+    this.save();
+    return newSession;
   }
 }
 

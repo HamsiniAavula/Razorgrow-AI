@@ -10,7 +10,8 @@ import {
   Layers,
   ArrowRight,
   Activity,
-  AlertTriangle
+  AlertTriangle,
+  Bot
 } from 'lucide-react';
 
 export default function OverviewTab({ stats, activity = [], onNavigateTab }) {
@@ -20,6 +21,8 @@ export default function OverviewTab({ stats, activity = [], onNavigateTab }) {
   const upsellRate = stats?.ai_upsell_rate || 18.6;
   const ordersCount = stats?.successful_orders || 428;
   const oppsCount = stats?.active_opportunities || 7;
+  const a2aRevenue = stats?.a2a_revenue || 0;
+  const a2aSessions = stats?.a2a_sessions_count || 0;
   const aiPercentage = ((aiRev / totalRev) * 100).toFixed(1);
 
   return (
@@ -172,6 +175,29 @@ export default function OverviewTab({ stats, activity = [], onNavigateTab }) {
             <span className="badge-tag" style={{ background: '#eff6ff', color: '#0284c7' }}>
               Policy Constrained
             </span>
+          </div>
+        </div>
+
+        {/* A2A Revenue */}
+        <div
+          className="kpi-card"
+          style={{ cursor: 'pointer', borderTop: '3px solid #7c3aed' }}
+          onClick={() => onNavigateTab && onNavigateTab('a2a')}
+        >
+          <div className="kpi-header">
+            <span className="kpi-label">A2A Revenue</span>
+            <div className="kpi-icon" style={{ background: '#f5f3ff', color: '#7c3aed' }}>
+              <Bot size={18} />
+            </div>
+          </div>
+          <div className="kpi-value" style={{ color: '#7c3aed' }}>
+            ₹{a2aRevenue.toLocaleString('en-IN')}
+          </div>
+          <div className="kpi-footer">
+            <span className="badge-tag" style={{ background: '#f5f3ff', color: '#7c3aed' }}>
+              {a2aSessions} bot sessions
+            </span>
+            <span style={{ color: '#94a3b8', fontSize: '0.7rem' }}>zero humans →</span>
           </div>
         </div>
       </div>

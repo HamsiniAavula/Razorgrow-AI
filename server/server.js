@@ -12,6 +12,7 @@ const PolicyEngine = require('./policies');
 const CouponOptimizer = require('./coupons');
 const GeminiAgent = require('./gemini');
 const RazorpayService = require('./razorpay');
+const a2aRouter = require('./a2a');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -33,9 +34,14 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     app: 'RazorGrow AI',
     timestamp: new Date().toISOString(),
-    razorpay_live: RazorpayService.isLive()
+    razorpay_live: RazorpayService.isLive(),
+    a2a_enabled: true,
+    a2a_protocol: 'RazorGrow-A2A/1.0'
   });
 });
+
+// A2A Commerce Layer — Agent-to-Agent endpoints
+app.use('/api/a2a', a2aRouter);
 
 app.get('/api/products', (req, res) => {
   const products = db.getProducts();
