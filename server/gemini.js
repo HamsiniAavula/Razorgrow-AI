@@ -11,7 +11,7 @@ class GeminiAgent {
    * Tool: SEARCH_CATALOG
    * Finds products matching intent and budget constraints from real database.
    */
-  static searchCatalog({ query = '', category = null, maxPrice = null, intent = 'general' }) {
+  static searchCatalog({ query = '', category = null, maxPrice = null, intent = 'general', preferences = [] }) {
     const products = db.getProducts();
     let matches = products.filter(p => p.stock > 0);
 
@@ -20,26 +20,52 @@ class GeminiAgent {
     }
 
     const q = query.toLowerCase();
+    const prefs = Array.isArray(preferences) ? preferences.map(p => p.toLowerCase()) : [];
     const isGift = q.includes('gift') || q.includes('brother') || q.includes('birthday') || q.includes('present');
-    const isSport = q.includes('run') || q.includes('shoe') || q.includes('sport') || q.includes('fitness');
-    const isBeauty = q.includes('skin') || q.includes('cream') || q.includes('sun') || q.includes('glow');
-    const isTech = q.includes('laptop') || q.includes('earbuds') || q.includes('mouse') || q.includes('tech') || q.includes('audio');
+    const isSport = q.includes('run') || q.includes('shoe') || q.includes('sport') || q.includes('fitness') || prefs.some(p => p.includes('footwear') || p.includes('fitness'));
+    const isBeauty = q.includes('skin') || q.includes('cream') || q.includes('sun') || q.includes('glow') || prefs.some(p => p.includes('beauty'));
+    const isTech = q.includes('laptop') || q.includes('earbuds') || q.includes('mouse') || q.includes('tech') || q.includes('audio') || prefs.some(p => p.includes('tech') || p.includes('electronics'));
 
     // Rank based on query terms & rating
     matches.sort((a, b) => {
       let scoreA = a.rating;
       let scoreB = b.rating;
 
-      if (isGift) {
-        if (a.category === 'Watches' || a.category === 'Accessories' || a.category === 'Gifts') scoreA += 5;
-        if (b.category === 'Watches' || b.category === 'Accessories' || b.category === 'Gifts') scoreB += 5;
+      // Domain-specific matches get strong priority
+      if (isTech) {
+        if (a.category === 'Electronics' || a.category === 'Audio') scoreA += 10;
+        if (b.category === 'Electronics' || b.category === 'Audio') scoreB += 10;
       }
-      if (isSport && (a.category === 'Footwear' || a.category === 'Apparel')) scoreA += 5;
-      if (isSport && (b.category === 'Footwear' || b.category === 'Apparel')) scoreB += 5;
-      if (isBeauty && a.category === 'Beauty') scoreA += 5;
-      if (isBeauty && b.category === 'Beauty') scoreB += 5;
-      if (isTech && (a.category === 'Electronics' || a.category === 'Audio')) scoreA += 5;
-      if (isTech && (b.category === 'Electronics' || b.category === 'Audio')) scoreB += 5;
+      if (isSport) {
+        if (a.category === 'Footwear' || a.category === 'Apparel') scoreA += 10;
+        if (b.category === 'Footwear' || b.category === 'Apparel') scoreB += 10;
+      }
+      if (isBeauty) {
+        if (a.category === 'Beauty') scoreA += 10;
+        if (b.category === 'Beauty') scoreB += 10;
+      }
+
+      if (isGift) {
+        if (a.category === 'Watches' || a.category === 'Accessories') scoreA += 5;
+        if (b.category === 'Watches' || b.category === 'Accessories') scoreB += 5;
+        // Pure packaging is an accessory/upsell, not primary gift if a domain was requested
+        if (!isTech && !isSport && !isBeauty) {
+          if (a.category === 'Gifts') scoreA += 5;
+          if (b.category === 'Gifts') scoreB += 5;
+        }
+      }
+
+      // Explicit category filter
+      if (category) {
+        if (a.category.toLowerCase() === category.toLowerCase()) scoreA += 15;
+        if (b.category.toLowerCase() === category.toLowerCase()) scoreB += 15;
+      }
+
+      // Preferences match bonus
+      for (const pref of prefs) {
+        if (a.category.toLowerCase().includes(pref) || a.name.toLowerCase().includes(pref)) scoreA += 6;
+        if (b.category.toLowerCase().includes(pref) || b.name.toLowerCase().includes(pref)) scoreB += 6;
+      }
 
       return scoreB - scoreA;
     });

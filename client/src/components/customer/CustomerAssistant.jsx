@@ -11,7 +11,8 @@ import {
   Package,
   Layers,
   ShieldCheck,
-  AlertCircle
+  AlertCircle,
+  Zap
 } from 'lucide-react';
 
 import CatalogView from './CatalogView';
@@ -19,6 +20,7 @@ import CustomerOrdersView from './CustomerOrdersView';
 import CartDrawer from './CartDrawer';
 import CheckoutModal from './CheckoutModal';
 import ReplanningModal from './ReplanningModal';
+import AIBuyerMode from './AIBuyerMode';
 
 export default function CustomerAssistant({
   products = [],
@@ -198,7 +200,18 @@ export default function CustomerAssistant({
             onClick={() => setActiveTab('chat')}
           >
             <Bot size={18} />
-            <span>AI Shopping</span>
+            <span>Shop with AI</span>
+          </button>
+
+          <button
+            type="button"
+            className={`sidebar-item ${activeTab === 'ai-buyer' ? 'active' : ''}`}
+            onClick={() => setActiveTab('ai-buyer')}
+            style={activeTab !== 'ai-buyer' ? { borderLeft: '3px solid #6d28d9', paddingLeft: 'calc(0.75rem - 3px)' } : {}}
+          >
+            <Zap size={18} />
+            <span style={{ flex: 1 }}>AI Buyer</span>
+            <span style={{ fontSize: '0.58rem', background: '#6d28d9', color: 'white', padding: '0.05rem 0.3rem', borderRadius: '4px', fontWeight: 700 }}>A2A</span>
           </button>
 
           <button
@@ -463,6 +476,15 @@ export default function CustomerAssistant({
               </form>
             </div>
           </div>
+        )}
+
+        {activeTab === 'ai-buyer' && (
+          <AIBuyerMode
+            onAddToCart={onAddToCart}
+            cart={cart}
+            setIsCartOpen={setIsCartOpen}
+            setIsCheckoutOpen={setIsCheckoutOpen}
+          />
         )}
 
         {activeTab === 'catalog' && (

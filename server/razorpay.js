@@ -127,16 +127,28 @@ class RazorpayService {
   }
 
   /**
-   * Verifies Razorpay Webhook HMAC signature.
+   * Verifies Razorpay Webhook HMAC-SHA256 signature.
+   * MUST use the raw POST body (Buffer) for correct HMAC computation.
+   * JSON.stringify of the parsed body produces different bytes.
+   * @param {Buffer|string} rawBody Raw request body
+   * @param {string} signature X-Razorpay-Signature header value
+   * @returns {boolean}
    */
   static verifyWebhookSignature(rawBody, signature) {
-    if (!signature) return false;
+    if (!signature || !rawBody) return false;
     try {
+      // Use Buffer directly if available, otherwise string
+      const bodyData = Buffer.isBuffer(rawBody) ? rawBody : Buffer.from(rawBody, 'utf-8');
       const expectedSignature = crypto
         .createHmac('sha256', WEBHOOK_SECRET)
-        .update(typeof rawBody === 'string' ? rawBody : JSON.stringify(rawBody))
+        .update(bodyData)
         .digest('hex');
-      return expectedSignature === signature;
+
+      // Timing-safe comparison to prevent timing attacks
+      const sigBuf = Buffer.from(signature, 'hex');
+      const expectedBuf = Buffer.from(expectedSignature, 'hex');
+      if (sigBuf.length !== expectedBuf.length) return false;
+      return crypto.timingSafeEqual(sigBuf, expectedBuf);
     } catch (err) {
       console.error('[Razorpay Webhook] Signature verification failed:', err);
       return false;

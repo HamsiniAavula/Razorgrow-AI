@@ -13,6 +13,7 @@ const CouponOptimizer = require('./coupons');
 const GeminiAgent = require('./gemini');
 const RazorpayService = require('./razorpay');
 const a2aRouter = require('./a2a');
+const a2aCustomerRouter = require('./a2a-customer');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -42,6 +43,9 @@ app.get('/api/health', (req, res) => {
 
 // A2A Commerce Layer — Agent-to-Agent endpoints
 app.use('/api/a2a', a2aRouter);
+
+// Customer-side A2A Buyer Agent
+app.use('/api/a2a', a2aCustomerRouter);
 
 app.get('/api/products', (req, res) => {
   const products = db.getProducts();
@@ -656,19 +660,57 @@ app.post('/api/checkout/simulate-failure', (req, res) => {
 // 5. RAZORPAY WEBHOOK ENDPOINT
 // ==========================================
 
+// GET health check — non-secret verification that the route exists
+app.get('/api/webhooks/razorpay/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    endpoint: 'razorpay-webhook',
+    method: 'POST',
+    path: '/api/webhooks/razorpay',
+    signature_header: 'X-Razorpay-Signature',
+    webhook_secret_configured: Boolean(process.env.RAZORPAY_WEBHOOK_SECRET),
+    supported_events: ['payment.captured', 'payment.failed', 'order.paid'],
+    idempotency: true
+  });
+});
+
 app.post('/api/webhooks/razorpay', (req, res) => {
   try {
     const signature = req.headers['x-razorpay-signature'];
-    const eventPayload = req.body;
+    const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
 
-    // Verify webhook signature if secret configured
-    if (process.env.RAZORPAY_WEBHOOK_SECRET) {
-      const isValid = RazorpayService.verifyWebhookSignature(req.rawBody, signature);
+    // Verify webhook signature using raw body (Buffer) for correct HMAC
+    if (webhookSecret) {
+      if (!signature) {
+        return res.status(400).json({ error: 'Missing X-Razorpay-Signature header' });
+      }
+
+      // Use raw body (Buffer) — critical: JSON.stringify of parsed body
+      // produces different bytes than the raw POST body
+      const rawBody = req.rawBody;
+      if (!rawBody) {
+        return res.status(400).json({ error: 'Raw body unavailable for signature verification' });
+      }
+
+      const isValid = RazorpayService.verifyWebhookSignature(rawBody, signature);
       if (!isValid) {
+        // Log the rejection
+        db.addAiAction({
+          session_id: 'webhook_listener',
+          action_type: 'WEBHOOK_REJECTED',
+          status: 'FAILED',
+          reason: 'Webhook signature verification failed — invalid HMAC',
+          confidence: 1.0,
+          input_summary: `Signature: ${signature ? signature.substring(0, 16) + '...' : 'MISSING'}`,
+          output_summary: 'Webhook rejected with 400',
+          evidence: 'HMAC-SHA256 digest did not match expected',
+          policy_checks: { signature_valid: false }
+        });
         return res.status(400).json({ error: 'Invalid webhook signature' });
       }
     }
 
+    const eventPayload = req.body;
     const result = RazorpayService.handleWebhookEvent(eventPayload, signature);
     res.json({ received: true, ...result });
   } catch (err) {
