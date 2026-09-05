@@ -4,8 +4,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Bot, Play, CheckCircle, XCircle, Loader2, ChevronDown, ChevronRight, ShoppingCart, Zap, Globe, FileJson } from 'lucide-react';
-
-const API = 'http://localhost:5000';
+// Use relative path so Vite proxy handles routing to local or Render backend
+const API = '';
 
 const INTENTS = [
   { label: 'Birthday gift for sister', intent: 'I want to buy a birthday gift for my sister', budget: 3000, prefs: ['Electronics', 'Accessories'] },

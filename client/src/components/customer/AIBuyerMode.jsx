@@ -8,8 +8,8 @@ import {
   ArrowRight, Loader2, Sparkles, AlertTriangle, ChevronDown,
   ChevronRight, ShoppingCart, Zap, User
 } from 'lucide-react';
-
-const API = 'http://localhost:5000';
+// Use relative path so Vite proxy handles routing to local or Render backend
+const API = '';
 
 const SAMPLE_INTENTS = [
   { label: 'Tech gift for brother under ₹3000', intent: 'Find me a tech gift under ₹3000 for my brother', budget: 3000, prefs: ['tech', 'Electronics'] },
