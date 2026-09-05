@@ -26,7 +26,7 @@ By orchestrating structured negotiation between a **Customer-side Buyer Agent** 
 - [Recommended Demo Walkthrough](#recommended-demo-6-step-walkthrough-for-judges)
 - [Project Structure](#project-structure)
 - [Future Scope](#future-scope)
-- [Links](#links)
+- [Links and demo video](#links)
 
 ---
 
@@ -448,6 +448,7 @@ Razorgrow-AI/
 ## Links
 
 - **GitHub Repository**: [https://github.com/HamsiniAavula/Razorgrow-AI](https://github.com/HamsiniAavula/Razorgrow-AI)
+- **Demo Video**: [https://www.youtube.com/watch?v=uj8v2aceUCg](https://www.youtube.com/watch?v=uj8v2aceUCg)
 - **Live Backend (Render)**: [https://razorgrow-ai-iez3.onrender.com](https://razorgrow-ai-iez3.onrender.com)
 - **Razorpay Webhook Endpoint**: `https://razorgrow-ai-iez3.onrender.com/api/webhooks/razorpay`
 - **Webhook Health Check**: `https://razorgrow-ai-iez3.onrender.com/api/webhooks/razorpay/health`
