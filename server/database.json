@@ -325,6 +325,41 @@
   },
   "orders": [
     {
+      "id": "ord_1788592907335_975",
+      "created_at": "2026-09-05T07:21:47.335Z",
+      "customer_id": "cust_demo_01",
+      "customer_name": "Arjun Verma",
+      "customer_email": "arjun.buyer@example.com",
+      "customer_phone": "+919876543210",
+      "items": [
+        {
+          "id": "prod_mouse_07",
+          "name": "Wireless Mouse",
+          "price": 799,
+          "quantity": 1,
+          "is_upsell": false
+        },
+        {
+          "id": "prod_giftbox_04",
+          "name": "Gift Packaging",
+          "price": 199,
+          "quantity": 1,
+          "is_upsell": true
+        }
+      ],
+      "subtotal": 998,
+      "upsell_amount": 199,
+      "discount": 0,
+      "coupon_code": null,
+      "total": 998,
+      "status": "PAYMENT_FAILED",
+      "razorpay_order_id": "order_TYGsNnrYLYXt7T",
+      "razorpay_payment_id": "pay_fail_1788592907504",
+      "ai_influenced": true,
+      "ai_attributed_revenue": 0,
+      "failure_reason": "User cancelled payment popup"
+    },
+    {
       "id": "ord_1788591591964_957",
       "created_at": "2026-09-05T06:59:51.964Z",
       "razorpay_order_id": "order_TYGVDFL8WVxefg",
@@ -1282,6 +1317,374 @@
     }
   ],
   "ai_actions": [
+    {
+      "id": "act_1788593192925_2720",
+      "timestamp": "2026-09-05T07:26:32.925Z",
+      "confidence": 0.95,
+      "session_id": "a2a_cust_1788593192913",
+      "action_type": "A2A_CUSTOMER_BUYER",
+      "status": "SUCCESS",
+      "reason": "Customer A2A buyer session: Find me a luxury watch bundle with premium accessories",
+      "input_summary": "Intent: Find me a luxury watch bundle with premium accessories, Budget: ₹6000",
+      "output_summary": "Product: Classic Watch ₹2499, Total: ₹2429, Replan: YES",
+      "evidence": "10 agent messages exchanged",
+      "policy_checks": {
+        "upsell_replanned": true,
+        "cart_validated": true
+      }
+    },
+    {
+      "id": "act_1788593192922_1714",
+      "timestamp": "2026-09-05T07:26:32.922Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "a2a_cust_1788593192913",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹269. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹269. Final cart amount: ₹2429",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 269
+      }
+    },
+    {
+      "id": "act_1788593192919_8130",
+      "timestamp": "2026-09-05T07:26:32.919Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "a2a_cust_1788593192913",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2698 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2698, Evaluated: SAVE10(VALID), FLAT300(BLOCKED), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹269",
+      "evidence": "SAVE10: status=VALID, discount=₹269 | FLAT300: status=BLOCKED, discount=₹300 | WELCOME15: status=BLOCKED, discount=₹404",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹269 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "BLOCKED",
+            "reason": "Discount of 11.1% breaches merchant maximum discount policy of 10%."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788593192917_8579",
+      "timestamp": "2026-09-05T07:26:32.917Z",
+      "confidence": 0.96,
+      "session_id": "a2a_cust_1788593192913",
+      "action_type": "UPSELL_PROPOSED",
+      "status": "SUCCESS",
+      "reason": "Agent replanned: Gift Packaging (₹199) within ₹500 cap",
+      "input_summary": "Fallback for blocked Premium Gift Box",
+      "output_summary": "Proposed: Gift Packaging (₹199)",
+      "evidence": "Replanned after policy block on ₹899 upsell",
+      "policy_checks": {
+        "max_upsell_limit": 500,
+        "proposed_price": 199,
+        "stock_available": true,
+        "customer_approval_required": true,
+        "customer_approved": false,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788593192913_909",
+      "timestamp": "2026-09-05T07:26:32.913Z",
+      "confidence": 1,
+      "session_id": "a2a_cust_1788593192913",
+      "action_type": "UPSELL_BLOCKED",
+      "status": "BLOCKED",
+      "reason": "Upsell price (₹899) exceeds merchant maximum limit of ₹500.",
+      "input_summary": "Candidate: Premium Gift Box (₹899)",
+      "output_summary": "BLOCKED: ₹899 > ₹500 ceiling",
+      "evidence": "Merchant max_upsell_amount = ₹500",
+      "policy_checks": {
+        "max_upsell_limit": 500,
+        "proposed_price": 899,
+        "stock_available": true,
+        "customer_approval_required": true,
+        "customer_approved": false,
+        "status": "BLOCKED"
+      }
+    },
+    {
+      "id": "act_1788592907513_9159",
+      "timestamp": "2026-09-05T07:21:47.513Z",
+      "confidence": 1,
+      "order_id": "ord_1788592907335_975",
+      "session_id": "session_checkout",
+      "action_type": "PAYMENT_FAILED",
+      "status": "FAILED",
+      "reason": "Razorpay payment failed: User cancelled payment popup. AI-attributed revenue set to ₹0.",
+      "input_summary": "Order ord_1788592907335_975, Expected: ₹998",
+      "output_summary": "Payment wasn't completed. AI-attributed revenue: ₹0. Cart preserved for retry.",
+      "evidence": "Razorpay failure response received.",
+      "policy_checks": {
+        "zero_revenue_attributed": true,
+        "cart_preserved": true
+      }
+    },
+    {
+      "id": "act_1788592907499_8304",
+      "timestamp": "2026-09-05T07:21:47.499Z",
+      "confidence": 1,
+      "order_id": "ord_1788592907335_975",
+      "session_id": "session_checkout",
+      "action_type": "RAZORPAY_ORDER_CREATED",
+      "status": "SUCCESS",
+      "reason": "Created Razorpay Test Mode order for ₹998 (99800 paise).",
+      "input_summary": "Order: ord_1788592907335_975, Amount: ₹998, Items: 2",
+      "output_summary": "Razorpay Order ID: order_TYGsNnrYLYXt7T",
+      "evidence": "Deterministic total: subtotal ₹998 - coupon ₹0 = ₹998",
+      "policy_checks": {
+        "amount_in_paise": 99800,
+        "currency": "INR"
+      }
+    },
+    {
+      "id": "act_1788592907333_9670",
+      "timestamp": "2026-09-05T07:21:47.333Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "session_checkout",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹998 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹998, Evaluated: SAVE10(INELIGIBLE), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "No valid coupon",
+      "evidence": "SAVE10: status=INELIGIBLE, discount=₹0 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹149",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹998 is below minimum order requirement of ₹1000."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹998 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788592907328_7478",
+      "timestamp": "2026-09-05T07:21:47.328Z",
+      "confidence": 0.95,
+      "session_id": "a2a_cust_1788592907318",
+      "action_type": "A2A_CUSTOMER_BUYER",
+      "status": "SUCCESS",
+      "reason": "Customer A2A buyer session: Find me a luxury watch bundle with premium accessories",
+      "input_summary": "Intent: Find me a luxury watch bundle with premium accessories, Budget: ₹6000",
+      "output_summary": "Product: Classic Watch ₹2499, Total: ₹2429, Replan: YES",
+      "evidence": "10 agent messages exchanged",
+      "policy_checks": {
+        "upsell_replanned": true,
+        "cart_validated": true
+      }
+    },
+    {
+      "id": "act_1788592907325_9609",
+      "timestamp": "2026-09-05T07:21:47.325Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "a2a_cust_1788592907318",
+      "action_type": "COUPON_SELECTED",
+      "status": "SUCCESS",
+      "reason": "Selected SAVE10 saving ₹269. Out of 3 evaluated coupons, this provides maximum customer savings while strictly complying with the 10% merchant discount ceiling.",
+      "input_summary": "Best coupon applied: SAVE10",
+      "output_summary": "Total savings: ₹269. Final cart amount: ₹2429",
+      "evidence": "Customer savings maximized deterministically under policy constraint.",
+      "policy_checks": {
+        "discount_within_policy": true,
+        "applied_discount": 269
+      }
+    },
+    {
+      "id": "act_1788592907323_5935",
+      "timestamp": "2026-09-05T07:21:47.323Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "a2a_cust_1788592907318",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹2698 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹2698, Evaluated: SAVE10(VALID), FLAT300(BLOCKED), WELCOME15(BLOCKED)",
+      "output_summary": "Optimal: SAVE10 saving ₹269",
+      "evidence": "SAVE10: status=VALID, discount=₹269 | FLAT300: status=BLOCKED, discount=₹300 | WELCOME15: status=BLOCKED, discount=₹404",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "VALID",
+            "reason": "Eligible for ₹269 savings (10% off). Satisfies 10% policy cap."
+          },
+          {
+            "code": "FLAT300",
+            "status": "BLOCKED",
+            "reason": "Discount of 11.1% breaches merchant maximum discount policy of 10%."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788592907320_3958",
+      "timestamp": "2026-09-05T07:21:47.320Z",
+      "confidence": 0.96,
+      "session_id": "a2a_cust_1788592907318",
+      "action_type": "UPSELL_PROPOSED",
+      "status": "SUCCESS",
+      "reason": "Agent replanned: Gift Packaging (₹199) within ₹500 cap",
+      "input_summary": "Fallback for blocked Premium Gift Box",
+      "output_summary": "Proposed: Gift Packaging (₹199)",
+      "evidence": "Replanned after policy block on ₹899 upsell",
+      "policy_checks": {
+        "max_upsell_limit": 500,
+        "proposed_price": 199,
+        "stock_available": true,
+        "customer_approval_required": true,
+        "customer_approved": false,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788592907318_2014",
+      "timestamp": "2026-09-05T07:21:47.318Z",
+      "confidence": 1,
+      "session_id": "a2a_cust_1788592907318",
+      "action_type": "UPSELL_BLOCKED",
+      "status": "BLOCKED",
+      "reason": "Upsell price (₹899) exceeds merchant maximum limit of ₹500.",
+      "input_summary": "Candidate: Premium Gift Box (₹899)",
+      "output_summary": "BLOCKED: ₹899 > ₹500 ceiling",
+      "evidence": "Merchant max_upsell_amount = ₹500",
+      "policy_checks": {
+        "max_upsell_limit": 500,
+        "proposed_price": 899,
+        "stock_available": true,
+        "customer_approval_required": true,
+        "customer_approved": false,
+        "status": "BLOCKED"
+      }
+    },
+    {
+      "id": "act_1788592907307_1080",
+      "timestamp": "2026-09-05T07:21:47.307Z",
+      "confidence": 0.95,
+      "session_id": "a2a_cust_1788592907287",
+      "action_type": "A2A_CUSTOMER_BUYER",
+      "status": "SUCCESS",
+      "reason": "Customer A2A buyer session: Find me a tech gift under ₹3000 for my brother",
+      "input_summary": "Intent: Find me a tech gift under ₹3000 for my brother, Budget: ₹3000",
+      "output_summary": "Product: Wireless Mouse ₹799, Total: ₹998, Replan: YES",
+      "evidence": "9 agent messages exchanged",
+      "policy_checks": {
+        "upsell_replanned": true,
+        "cart_validated": true
+      }
+    },
+    {
+      "id": "act_1788592907305_9200",
+      "timestamp": "2026-09-05T07:21:47.305Z",
+      "confidence": 1,
+      "order_id": null,
+      "session_id": "a2a_cust_1788592907287",
+      "action_type": "COUPON_EVALUATED",
+      "status": "SUCCESS",
+      "reason": "Evaluated 3 coupons against ₹998 subtotal and 10% merchant policy.",
+      "input_summary": "Subtotal: ₹998, Evaluated: SAVE10(INELIGIBLE), FLAT300(INELIGIBLE), WELCOME15(BLOCKED)",
+      "output_summary": "No valid coupon",
+      "evidence": "SAVE10: status=INELIGIBLE, discount=₹0 | FLAT300: status=INELIGIBLE, discount=₹0 | WELCOME15: status=BLOCKED, discount=₹149",
+      "policy_checks": {
+        "max_discount_percent": 10,
+        "results": [
+          {
+            "code": "SAVE10",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹998 is below minimum order requirement of ₹1000."
+          },
+          {
+            "code": "FLAT300",
+            "status": "INELIGIBLE",
+            "reason": "Subtotal ₹998 is below minimum order requirement of ₹2500."
+          },
+          {
+            "code": "WELCOME15",
+            "status": "BLOCKED",
+            "reason": "Discount of 15.0% breaches merchant maximum discount policy of 10%."
+          }
+        ]
+      }
+    },
+    {
+      "id": "act_1788592907302_9565",
+      "timestamp": "2026-09-05T07:21:47.302Z",
+      "confidence": 0.96,
+      "session_id": "a2a_cust_1788592907287",
+      "action_type": "UPSELL_PROPOSED",
+      "status": "SUCCESS",
+      "reason": "Agent replanned: Gift Packaging (₹199) within ₹500 cap",
+      "input_summary": "Fallback for blocked Premium Gift Box",
+      "output_summary": "Proposed: Gift Packaging (₹199)",
+      "evidence": "Replanned after policy block on ₹899 upsell",
+      "policy_checks": {
+        "max_upsell_limit": 500,
+        "proposed_price": 199,
+        "stock_available": true,
+        "customer_approval_required": true,
+        "customer_approved": false,
+        "status": "ALLOW"
+      }
+    },
+    {
+      "id": "act_1788592907300_9134",
+      "timestamp": "2026-09-05T07:21:47.300Z",
+      "confidence": 1,
+      "session_id": "a2a_cust_1788592907287",
+      "action_type": "UPSELL_BLOCKED",
+      "status": "BLOCKED",
+      "reason": "Upsell price (₹899) exceeds merchant maximum limit of ₹500.",
+      "input_summary": "Candidate: Premium Gift Box (₹899)",
+      "output_summary": "BLOCKED: ₹899 > ₹500 ceiling",
+      "evidence": "Merchant max_upsell_amount = ₹500",
+      "policy_checks": {
+        "max_upsell_limit": 500,
+        "proposed_price": 899,
+        "stock_available": true,
+        "customer_approval_required": true,
+        "customer_approved": false,
+        "status": "BLOCKED"
+      }
+    },
     {
       "id": "act_1788591592011_6192",
       "timestamp": "2026-09-05T06:59:52.011Z",
@@ -9295,6 +9698,16 @@
     }
   ],
   "payment_events": [
+    {
+      "id": "pevt_1788592907510_749",
+      "timestamp": "2026-09-05T07:21:47.510Z",
+      "order_id": "ord_1788592907335_975",
+      "razorpay_event_id": "evt_fail_1788592907510",
+      "event_type": "payment.failed",
+      "status": "FAILED",
+      "amount": 99800,
+      "error": "User cancelled payment popup"
+    },
     {
       "id": "pevt_1788591338769_396",
       "timestamp": "2026-09-05T06:55:38.769Z",

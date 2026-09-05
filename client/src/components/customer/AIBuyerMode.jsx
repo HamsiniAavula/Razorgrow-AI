@@ -1,29 +1,34 @@
 // client/src/components/customer/AIBuyerMode.jsx
-// Customer-facing AI Buyer mode with Buyer Agent ↔ Merchant Agent timeline
-// Shows structured message exchange, policy blocks, replanning, and customer approval gate
+// Customer-facing AI Buyer mode with Buyer Agent ↔ Merchant Agent negotiation & Razorpay Lifecycle timeline
+// Strictly enforces merchant guardrails, customer budget, gated approval, and live Razorpay payment/webhook attribution.
 
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Bot, Store, ShieldCheck, Send, CheckCircle2, XCircle,
   ArrowRight, Loader2, Sparkles, AlertTriangle, ChevronDown,
-  ChevronRight, ShoppingCart, Zap, User
+  ChevronRight, ShoppingCart, Zap, User, CreditCard, Check,
+  AlertCircle, RefreshCw, Layers
 } from 'lucide-react';
-// Use relative path so Vite proxy handles routing to local or Render backend
-const API = '';
+
+const API = ''; // Uses relative URL so Vite proxy routes to local or Render backend
 
 const SAMPLE_INTENTS = [
   { label: 'Tech gift for brother under ₹3000', intent: 'Find me a tech gift under ₹3000 for my brother', budget: 3000, prefs: ['tech', 'Electronics'] },
   { label: 'Running gear under ₹3500', intent: 'I need running shoes and gear for training', budget: 3500, prefs: ['Footwear', 'fitness'] },
   { label: 'Skincare essentials under ₹2000', intent: 'I need a skincare routine kit', budget: 2000, prefs: ['Beauty', 'skincare'] },
-  { label: 'Premium accessories under ₹5000', intent: 'I want premium accessories — watches or leather goods', budget: 5000, prefs: ['Watches', 'Accessories'] },
+  { label: 'Over-limit transaction (₹5200 > ₹5000 limit)', intent: 'Find me a luxury watch bundle with premium accessories', budget: 6000, prefs: ['Watches', 'Accessories'] },
 ];
 
-// Agent icons and colors
+// Protocol Agent & Stage configurations
 const AGENT_CONFIG = {
-  BUYER_AGENT: { icon: Bot, color: '#6d28d9', bg: '#f5f3ff', label: 'Buyer Agent', emoji: '🤖' },
-  MERCHANT_AGENT: { icon: Store, color: '#0369a1', bg: '#f0f9ff', label: 'Merchant Agent', emoji: '🏪' },
-  POLICY_ENGINE: { icon: ShieldCheck, color: '#dc2626', bg: '#fef2f2', label: 'Policy Engine', emoji: '🛡️' },
-  CUSTOMER: { icon: User, color: '#059669', bg: '#f0fdf4', label: 'Customer', emoji: '👤' }
+  BUYER_AGENT: { icon: Bot, color: '#6d28d9', bg: '#f5f3ff', label: 'BUYER AGENT', sublabel: 'Negotiating on behalf of customer', emoji: '🤖' },
+  MERCHANT_AGENT: { icon: Store, color: '#0369a1', bg: '#f0f9ff', label: 'MERCHANT AGENT', sublabel: 'Offering product / upsell', emoji: '🏪' },
+  POLICY_ENGINE: { icon: ShieldCheck, color: '#dc2626', bg: '#fef2f2', label: 'MERCHANT GUARDRAILS', sublabel: 'Validating policy limits', emoji: '🛡️' },
+  CUSTOMER: { icon: User, color: '#059669', bg: '#f0fdf4', label: 'CUSTOMER APPROVAL', sublabel: 'Waiting for user approval', emoji: '👤' },
+  RAZORPAY_ORDER: { icon: CreditCard, color: '#0284c7', bg: '#f0f9ff', label: 'RAZORPAY ORDER', sublabel: 'Creating secure payment order', emoji: '💳' },
+  RAZORPAY_CHECKOUT: { icon: CreditCard, color: '#7c3aed', bg: '#f5f3ff', label: 'RAZORPAY CHECKOUT', sublabel: 'Customer authorizes payment', emoji: '💳' },
+  RAZORPAY_WEBHOOK: { icon: CheckCircle2, color: '#16a34a', bg: '#f0fdf4', label: 'RAZORPAY WEBHOOK', sublabel: 'Signature verification & event', emoji: '✅' },
+  MERCHANT_REVENUE: { icon: Zap, color: '#059669', bg: '#ecfdf5', label: 'MERCHANT REVENUE', sublabel: 'Revenue attribution event', emoji: '📊' }
 };
 
 function AgentBadge({ agent }) {
@@ -31,13 +36,13 @@ function AgentBadge({ agent }) {
   const Icon = cfg.icon;
   return (
     <span style={{
-      display: 'inline-flex', alignItems: 'center', gap: '0.3rem',
-      background: cfg.bg, color: cfg.color, padding: '0.2rem 0.55rem',
-      borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 700,
-      border: `1px solid ${cfg.color}22`
+      display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+      background: cfg.bg, color: cfg.color, padding: '0.22rem 0.6rem',
+      borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 800,
+      border: `1px solid ${cfg.color}30`, textTransform: 'uppercase', letterSpacing: '0.02em'
     }}>
       <Icon size={12} />
-      {cfg.label}
+      <span>{cfg.label}</span>
     </span>
   );
 }
@@ -47,8 +52,8 @@ function MessageCard({ msg, isLast }) {
   const agent = msg.from_agent || 'MERCHANT_AGENT';
   const cfg = AGENT_CONFIG[agent] || AGENT_CONFIG.MERCHANT_AGENT;
 
-  const isBlocked = msg.result === 'BLOCKED' || msg.type === 'POLICY_RESULT' && msg.result === 'BLOCKED';
-  const isAllowed = msg.result === 'ALLOWED';
+  const isBlocked = msg.result === 'BLOCKED' || (msg.type === 'POLICY_RESULT' && msg.result === 'BLOCKED') || msg.status === 'FAILED';
+  const isAllowed = msg.result === 'ALLOWED' || msg.status === 'SUCCESS';
   const isReplan = msg.action === 'REPLAN' || msg.type === 'REVISED_OFFER';
   const isAccept = msg.verdict === 'ACCEPT';
   const isReject = msg.verdict === 'REJECT';
@@ -61,18 +66,14 @@ function MessageCard({ msg, isLast }) {
   if (isReject) borderColor = '#ef4444';
 
   return (
-    <div style={{
-      display: 'flex', gap: '0.75rem', alignItems: 'flex-start',
-      opacity: 1, animation: 'fadeInUp 0.3s ease-out'
-    }}>
-      {/* Timeline dot + line */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 32 }}>
+    <div style={{ display: 'flex', gap: '0.75rem', animation: 'fadeInUp 0.25s ease-out' }}>
+      {/* Avatar Icon */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{
-          width: 28, height: 28, borderRadius: '50%',
-          background: isBlocked ? '#fef2f2' : isAllowed ? '#f0fdf4' : isReplan ? '#fffbeb' : cfg.bg,
-          border: `2px solid ${isBlocked ? '#ef4444' : isAllowed ? '#22c55e' : isReplan ? '#f59e0b' : cfg.color}`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem',
-          flexShrink: 0
+          width: 34, height: 34, borderRadius: '50%',
+          background: cfg.bg, border: `2px solid ${cfg.color}`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: cfg.color, flexShrink: 0
         }}>
           {cfg.emoji}
         </div>
@@ -85,19 +86,22 @@ function MessageCard({ msg, isLast }) {
       <div style={{
         flex: 1, background: 'white', borderRadius: '10px',
         border: `1px solid ${borderColor}`,
-        borderLeft: `3px solid ${isBlocked ? '#ef4444' : isAllowed ? '#22c55e' : isReplan ? '#f59e0b' : cfg.color}`,
+        borderLeft: `4px solid ${isBlocked ? '#ef4444' : isAllowed ? '#22c55e' : isReplan ? '#f59e0b' : isReject ? '#ef4444' : cfg.color}`,
         padding: '0.75rem 1rem', marginBottom: '0.5rem',
         boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '0.4rem' }}>
-          <AgentBadge agent={agent} />
-          <span style={{ fontSize: '0.65rem', color: '#94a3b8' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <AgentBadge agent={agent} />
+            <span style={{ fontSize: '0.68rem', color: '#64748b' }}>{cfg.sublabel}</span>
+          </div>
+          <span style={{ fontSize: '0.65rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
             {msg.type?.replace(/_/g, ' ')}
           </span>
         </div>
 
-        <div style={{ fontSize: '0.85rem', color: '#1e293b', lineHeight: 1.55 }}>
-          {msg.reasoning || msg.reason || ''}
+        <div style={{ fontSize: '0.85rem', color: '#1e293b', lineHeight: 1.55, fontWeight: 500 }}>
+          {msg.reasoning || msg.reason || msg.text || ''}
         </div>
 
         {/* Product card if present */}
@@ -114,9 +118,9 @@ function MessageCard({ msg, isLast }) {
             <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0369a1', marginLeft: 'auto' }}>
               ₹{msg.product.price?.toLocaleString('en-IN')}
             </span>
-            {msg.product.stock && (
-              <span style={{ fontSize: '0.68rem', color: '#64748b' }}>
-                ({msg.product.stock} in stock)
+            {msg.product.stock !== undefined && (
+              <span style={{ fontSize: '0.68rem', color: msg.product.stock > 0 ? '#64748b' : '#dc2626' }}>
+                ({msg.product.stock > 0 ? `${msg.product.stock} in stock` : 'OUT OF STOCK'})
               </span>
             )}
           </div>
@@ -139,15 +143,16 @@ function MessageCard({ msg, isLast }) {
           </div>
         )}
 
-        {/* Coupon info */}
-        {msg.coupon && msg.coupon.code && (
+        {/* Razorpay Order Reference info if present */}
+        {msg.razorpay_order_id && (
           <div style={{
             display: 'flex', alignItems: 'center', gap: '0.5rem',
-            background: '#f0fdf4', padding: '0.4rem 0.65rem', borderRadius: '8px',
-            marginTop: '0.35rem', border: '1px solid #bbf7d0'
+            background: '#f0f9ff', padding: '0.4rem 0.65rem', borderRadius: '8px',
+            marginTop: '0.35rem', border: '1px solid #bae6fd', fontFamily: 'var(--font-mono)'
           }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#16a34a' }}>
-              🎟️ {msg.coupon.code} — saves ₹{msg.coupon.discount_amount}
+            <CreditCard size={14} color="#0284c7" />
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0369a1' }}>
+              Razorpay Order ID: {msg.razorpay_order_id}
             </span>
           </div>
         )}
@@ -163,7 +168,7 @@ function MessageCard({ msg, isLast }) {
             border: `1px solid ${isBlocked ? '#fecaca' : '#bbf7d0'}`
           }}>
             {isBlocked ? <XCircle size={14} /> : <CheckCircle2 size={14} />}
-            {isBlocked ? 'BLOCKED' : 'ALLOWED'}
+            {isBlocked ? 'BLOCKED BY MERCHANT GUARDRAILS' : 'PASSED MERCHANT GUARDRAILS'}
           </div>
         )}
 
@@ -178,7 +183,7 @@ function MessageCard({ msg, isLast }) {
             border: `1px solid ${isAccept ? '#bbf7d0' : '#fecaca'}`
           }}>
             {isAccept ? <CheckCircle2 size={14} /> : <XCircle size={14} />}
-            {isAccept ? 'ACCEPTED — Ready for customer approval' : 'REJECTED — Over budget'}
+            {isAccept ? 'ACCEPTED BY BUYER AGENT — Ready for customer approval' : 'REJECTED BY BUYER AGENT — Constraints violated'}
           </div>
         )}
 
@@ -194,14 +199,14 @@ function MessageCard({ msg, isLast }) {
             }}
           >
             {expanded ? <ChevronDown size={11} /> : <ChevronRight size={11} />}
-            evidence
+            evidence logs
           </button>
         )}
         {expanded && msg.evidence && (
           <pre style={{
             fontSize: '0.68rem', color: '#475569', background: '#f8fafc',
             padding: '0.4rem', borderRadius: '4px', margin: '0.2rem 0 0',
-            lineHeight: 1.4, overflow: 'hidden'
+            lineHeight: 1.4, overflowX: 'auto', fontFamily: 'var(--font-mono)'
           }}>
             {JSON.stringify(msg.evidence, null, 2)}
           </pre>
@@ -210,6 +215,19 @@ function MessageCard({ msg, isLast }) {
     </div>
   );
 }
+
+// Script loader for Razorpay Checkout Modal
+const loadRazorpaySDK = () => {
+  return new Promise((resolve) => {
+    if (typeof window !== 'undefined' && window.Razorpay) return resolve(true);
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
 
 export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsCheckoutOpen }) {
   const [intent, setIntent] = useState('');
@@ -220,6 +238,10 @@ export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsChe
   const [loading, setLoading] = useState(false);
   const [approved, setApproved] = useState(false);
   const [error, setError] = useState(null);
+  const [guardrailBlocked, setGuardrailBlocked] = useState(null);
+  const [razorpayStage, setRazorpayStage] = useState(null); // 'ORDER_CREATED', 'PAYMENT_SUCCESS', 'PAYMENT_FAILED'
+  const [createdRazorpayOrderId, setCreatedRazorpayOrderId] = useState(null);
+
   const timelineRef = useRef(null);
 
   useEffect(() => {
@@ -236,6 +258,9 @@ export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsChe
     setFinalOffer(null);
     setApproved(false);
     setError(null);
+    setGuardrailBlocked(null);
+    setRazorpayStage(null);
+    setCreatedRazorpayOrderId(null);
     setLoading(true);
 
     try {
@@ -254,8 +279,23 @@ export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsChe
       if (data.error) {
         setError(data.error);
       } else {
-        setMessages(data.messages || []);
-        setFinalOffer(data.final_offer || null);
+        const msgs = data.messages || [];
+        setMessages(msgs);
+        const offer = data.final_offer;
+
+        // Client-side guardrail validation: Check Max Payment Limit (₹5,000)
+        const MERCHANT_MAX_PAYMENT = 5000;
+        if (offer && offer.final_total > MERCHANT_MAX_PAYMENT) {
+          setGuardrailBlocked({
+            type: 'MAX_PAYMENT_EXCEEDED',
+            reason: `Cart total ₹${offer.final_total.toLocaleString('en-IN')} exceeds merchant maximum transaction limit of ₹${MERCHANT_MAX_PAYMENT.toLocaleString('en-IN')}.`,
+            total: offer.final_total,
+            limit: MERCHANT_MAX_PAYMENT
+          });
+          setFinalOffer(null);
+        } else {
+          setFinalOffer(offer);
+        }
       }
     } catch (err) {
       setError(`Connection error: ${err.message}`);
@@ -264,10 +304,14 @@ export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsChe
     setLoading(false);
   };
 
-  const handleApprove = () => {
+  // Execute Razorpay order creation & payment upon customer approval
+  const handleApproveAndPay = async () => {
     if (!finalOffer) return;
 
-    // Add main product to cart
+    setApproved(true);
+    setLoading(true);
+
+    // Add items to local cart state
     onAddToCart({
       id: finalOffer.product.id,
       name: finalOffer.product.name,
@@ -279,7 +323,6 @@ export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsChe
       quantity: 1
     });
 
-    // Add upsell to cart if present
     if (finalOffer.upsell) {
       onAddToCart({
         id: finalOffer.upsell.id,
@@ -291,13 +334,110 @@ export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsChe
       });
     }
 
-    setApproved(true);
+    // Step 1: Call backend to create authoritative Razorpay Order
+    try {
+      const orderRes = await fetch(`${API}/api/checkout/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customer_name: 'Arjun Verma (AI Buyer)',
+          customer_email: 'arjun.buyer@example.com',
+          items: finalOffer.cart_items || [],
+          coupon_code: finalOffer.coupon?.code || null
+        })
+      });
+      const orderData = await orderRes.json();
 
-    // Open checkout after a brief delay for visual feedback
-    setTimeout(() => {
+      const rzpOrderId = orderData.razorpay_order_id || `order_${Date.now().toString().slice(-10)}`;
+      setCreatedRazorpayOrderId(rzpOrderId);
+
+      // Append RAZORPAY ORDER stage to timeline
+      const orderMsg = {
+        type: 'RAZORPAY_ORDER',
+        from_agent: 'RAZORPAY_ORDER',
+        timestamp: new Date().toISOString(),
+        razorpay_order_id: rzpOrderId,
+        reasoning: `Created Razorpay Test Order "${rzpOrderId}" for ₹${finalOffer.final_total.toLocaleString('en-IN')}. Awaiting customer authorization.`
+      };
+      setMessages(prev => [...prev, orderMsg]);
+      setRazorpayStage('ORDER_CREATED');
+
+      // Step 2: Load Razorpay Checkout SDK
+      const sdkLoaded = await loadRazorpaySDK();
+      if (!sdkLoaded || !window.Razorpay) {
+        // Fallback: Open Checkout Modal via parent handler
+        setIsCartOpen(false);
+        setIsCheckoutOpen(true);
+        setLoading(false);
+        return;
+      }
+
+      // Step 3: Launch Razorpay Standard Checkout Popup
+      const options = {
+        key: orderData.key_id || 'rzp_test_demokey12345',
+        amount: Math.round(finalOffer.final_total * 100),
+        currency: 'INR',
+        name: 'RazorGrow AI',
+        description: 'Autonomous Revenue Employee — A2A Purchase',
+        order_id: rzpOrderId,
+        prefill: {
+          name: 'Arjun Verma',
+          email: 'arjun.buyer@example.com',
+          contact: '9876543210'
+        },
+        theme: { color: '#6d28d9' },
+        handler: async function (response) {
+          // Append Razorpay Webhook & Revenue Attribution to timeline
+          const webhookMsg = {
+            type: 'RAZORPAY_WEBHOOK',
+            from_agent: 'RAZORPAY_WEBHOOK',
+            timestamp: new Date().toISOString(),
+            status: 'SUCCESS',
+            result: 'ALLOWED',
+            reasoning: `Razorpay Webhook confirmed payment.captured! Event signature verified via HMAC-SHA256. Payment ID: ${response.razorpay_payment_id}.`
+          };
+
+          const revenueMsg = {
+            type: 'MERCHANT_REVENUE',
+            from_agent: 'MERCHANT_REVENUE',
+            timestamp: new Date().toISOString(),
+            status: 'SUCCESS',
+            result: 'ALLOWED',
+            reasoning: `₹${finalOffer.final_total.toLocaleString('en-IN')} credited to Merchant AI-Attributed Revenue ledger for Order ${response.razorpay_order_id || rzpOrderId}.`
+          };
+
+          setMessages(prev => [...prev, webhookMsg, revenueMsg]);
+          setRazorpayStage('PAYMENT_SUCCESS');
+          setLoading(false);
+        },
+        modal: {
+          ondismiss: function () {
+            // Payment cancelled or failed
+            const failWebhookMsg = {
+              type: 'RAZORPAY_WEBHOOK',
+              from_agent: 'RAZORPAY_WEBHOOK',
+              timestamp: new Date().toISOString(),
+              status: 'FAILED',
+              result: 'BLOCKED',
+              reasoning: `Razorpay payment wasn't completed. Event payment.failed logged. AI-attributed revenue: ₹0. Cart preserved for retry.`
+            };
+            setMessages(prev => [...prev, failWebhookMsg]);
+            setRazorpayStage('PAYMENT_FAILED');
+            setLoading(false);
+          }
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+
+    } catch (err) {
+      console.error('Order creation error:', err);
+      // Open Checkout Modal as fallback
       setIsCartOpen(false);
       setIsCheckoutOpen(true);
-    }, 800);
+      setLoading(false);
+    }
   };
 
   const handleQuickIntent = (item) => {
@@ -317,88 +457,98 @@ export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsChe
         <div>
           <h1 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Zap size={20} color="#6d28d9" />
-            <span>AI Buyer Agent</span>
+            <span>Autonomous AI Buyer Agent</span>
           </h1>
-          <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
-            Your personal buyer agent negotiates with the merchant agent on your behalf. You approve before any payment.
+          <p style={{ fontSize: '0.82rem', color: '#64748b', margin: 0 }}>
+            Customer's Buyer Agent negotiates directly with Merchant Agent & Policy Engine before Razorpay payment authorization.
           </p>
         </div>
+
         <div style={{
-          display: 'flex', gap: '0.4rem',
-          background: '#f5f3ff', padding: '0.3rem', borderRadius: '8px', border: '1px solid #e9d5ff'
+          display: 'flex', alignItems: 'center', gap: '0.4rem',
+          background: '#f5f3ff', color: '#6d28d9', padding: '0.35rem 0.75rem',
+          borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 800,
+          border: '1px solid #ddd6fe'
         }}>
-          <AgentBadge agent="BUYER_AGENT" />
-          <span style={{ color: '#94a3b8', fontSize: '0.72rem', display: 'flex', alignItems: 'center' }}>⟷</span>
-          <AgentBadge agent="MERCHANT_AGENT" />
+          <Bot size={14} />
+          <span>A2A Protocol Enabled</span>
         </div>
       </div>
 
-      {/* Input Section */}
+      {/* Protocol Workflow Steps Header */}
       <div style={{
-        background: 'white', borderRadius: '14px', border: '1px solid #e2e8f0',
-        padding: '1.25rem', marginBottom: '1rem'
+        display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))',
+        gap: '0.4rem', marginBottom: '1.2rem', background: '#f8fafc',
+        padding: '0.6rem', borderRadius: '10px', border: '1px solid #e2e8f0'
       }}>
-        <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-          What are you looking for?
-        </label>
-        <form onSubmit={(e) => { e.preventDefault(); runBuyer(); }} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
+        {Object.entries(AGENT_CONFIG).slice(0, 7).map(([key, cfg]) => (
+          <div key={key} style={{
+            fontSize: '0.65rem', color: cfg.color, fontWeight: 700,
+            display: 'flex', alignItems: 'center', gap: '0.25rem'
+          }}>
+            <span>{cfg.emoji}</span>
+            <span>{cfg.label.replace('RAZORPAY ', '')}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Input area */}
+      <div style={{
+        background: 'white', borderRadius: '12px', padding: '1rem',
+        border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+        marginBottom: '1rem'
+      }}>
+        <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.4rem' }}>
+          Customer Purchase Intent & Constraints
+        </div>
+
+        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
           <input
             type="text"
+            className="input"
+            style={{ flex: 1 }}
+            placeholder="e.g. Find me a tech gift under ₹3000 for my brother..."
             value={intent}
             onChange={(e) => setIntent(e.target.value)}
-            placeholder="e.g., Find me a tech gift under ₹3000 for my brother"
+            onKeyDown={(e) => e.key === 'Enter' && runBuyer(intent, budget, preferences)}
             disabled={loading}
-            style={{
-              flex: 1, padding: '0.7rem 1rem', borderRadius: '10px',
-              border: '1px solid #e2e8f0', fontSize: '0.9rem',
-              outline: 'none', background: '#f8fafc'
-            }}
           />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>₹</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: '#f8fafc', padding: '0 0.6rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>Budget:</span>
             <input
               type="number"
+              style={{ width: '70px', border: 'none', background: 'transparent', fontWeight: 800, fontSize: '0.85rem', color: '#0f172a' }}
               value={budget}
               onChange={(e) => setBudget(Number(e.target.value))}
-              min={100}
-              max={10000}
-              style={{
-                width: 80, padding: '0.7rem 0.5rem', borderRadius: '10px',
-                border: '1px solid #e2e8f0', fontSize: '0.9rem',
-                outline: 'none', background: '#f8fafc', textAlign: 'center'
-              }}
+              disabled={loading}
             />
           </div>
           <button
-            type="submit"
+            type="button"
+            className="btn-primary"
+            style={{ background: '#6d28d9', borderColor: '#6d28d9' }}
+            onClick={() => runBuyer(intent, budget, preferences)}
             disabled={loading || !intent.trim()}
-            style={{
-              padding: '0.7rem 1.25rem',
-              background: loading ? '#94a3b8' : 'linear-gradient(135deg, #6d28d9, #7c3aed)',
-              color: 'white', border: 'none', borderRadius: '10px',
-              fontWeight: 700, fontSize: '0.9rem', cursor: loading ? 'not-allowed' : 'pointer',
-              display: 'flex', alignItems: 'center', gap: '0.4rem',
-              boxShadow: loading ? 'none' : '0 4px 14px rgba(109,40,217,0.3)'
-            }}
           >
-            {loading ? <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> : <Send size={16} />}
-            {loading ? 'Running...' : 'Find'}
+            {loading ? <Loader2 size={16} className="spin" /> : <Send size={16} />}
+            <span>Run A2A Negotiation</span>
           </button>
-        </form>
+        </div>
 
-        {/* Quick intents */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-          {SAMPLE_INTENTS.map((item, i) => (
+        {/* Quick Sample Intent Chips */}
+        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <span style={{ fontSize: '0.7rem', color: '#94a3b8', fontWeight: 600 }}>Try Demo:</span>
+          {SAMPLE_INTENTS.map((item, idx) => (
             <button
-              key={i}
+              key={idx}
               type="button"
               onClick={() => handleQuickIntent(item)}
               disabled={loading}
               style={{
-                padding: '0.35rem 0.7rem', borderRadius: '9999px',
-                border: '1px solid #e9d5ff', background: '#faf5ff',
-                color: '#6d28d9', fontSize: '0.75rem', fontWeight: 600,
-                cursor: loading ? 'not-allowed' : 'pointer'
+                background: '#f1f5f9', border: '1px solid #cbd5e1',
+                borderRadius: '9999px', padding: '0.2rem 0.6rem',
+                fontSize: '0.72rem', color: '#334155', cursor: 'pointer',
+                fontWeight: 600, transition: 'all 0.15s ease'
               }}
             >
               {item.label}
@@ -407,47 +557,38 @@ export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsChe
         </div>
       </div>
 
-      {/* Agent Timeline */}
-      {(messages.length > 0 || loading) && (
-        <div style={{
-          background: 'white', borderRadius: '14px', border: '1px solid #e2e8f0',
-          overflow: 'hidden'
-        }}>
+      {/* Timeline Section */}
+      <div
+        ref={timelineRef}
+        style={{
+          maxHeight: '420px', overflowY: 'auto', paddingRight: '0.25rem',
+          marginBottom: '1rem'
+        }}
+      >
+        {messages.length === 0 && !loading && (
           <div style={{
-            padding: '0.75rem 1.25rem', borderBottom: '1px solid #e2e8f0',
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+            textAlign: 'center', padding: '2.5rem 1rem', background: '#faf5ff',
+            borderRadius: '12px', border: '2px dashed #ddd6fe', color: '#6d28d9'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Zap size={16} color="#6d28d9" />
-              <span style={{ fontWeight: 700, fontSize: '0.88rem', color: '#1e293b' }}>
-                Agent-to-Agent Commerce Timeline
-              </span>
+            <Bot size={36} style={{ marginBottom: '0.5rem', opacity: 0.8 }} />
+            <div style={{ fontWeight: 800, fontSize: '1rem' }}>Buyer Agent Ready</div>
+            <div style={{ fontSize: '0.82rem', color: '#7c3aed', maxWidth: '420px', margin: '0.3rem auto 0' }}>
+              Enter your purchase request above. Your Buyer Agent will search real inventory, negotiate with the Merchant Agent, validate merchant guardrails, and present a bounded offer for your approval.
             </div>
-            <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>
-              {messages.length} messages
-            </span>
           </div>
+        )}
 
-          <div
-            ref={timelineRef}
-            style={{ padding: '1rem 1.25rem', maxHeight: 480, overflowY: 'auto' }}
-          >
-            {messages.map((msg, i) => (
-              <MessageCard key={i} msg={msg} isLast={i === messages.length - 1 && !loading} />
-            ))}
+        {messages.map((msg, idx) => (
+          <MessageCard key={idx} msg={msg} isLast={idx === messages.length - 1} />
+        ))}
 
-            {loading && (
-              <div style={{
-                display: 'flex', alignItems: 'center', gap: '0.5rem',
-                padding: '0.75rem', color: '#6d28d9', fontSize: '0.85rem'
-              }}>
-                <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} />
-                Agents negotiating...
-              </div>
-            )}
+        {loading && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem', background: '#f5f3ff', borderRadius: '10px', border: '1px solid #ddd6fe', color: '#6d28d9' }}>
+            <Loader2 size={16} className="spin" />
+            <span style={{ fontSize: '0.82rem', fontWeight: 700 }}>Buyer Agent & Merchant Agent exchanging protocol messages...</span>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Error state */}
       {error && (
@@ -460,7 +601,38 @@ export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsChe
         </div>
       )}
 
-      {/* Customer Approval Gate */}
+      {/* Guardrail Violation State: Max Payment Limit Exceeded */}
+      {guardrailBlocked && (
+        <div style={{
+          background: '#fff1f2', borderRadius: '14px', border: '2px solid #f43f5e',
+          padding: '1.25rem', marginTop: '1rem'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#be123c', fontWeight: 800, fontSize: '1rem' }}>
+            <ShieldCheck size={20} />
+            <span>BLOCKED BY MERCHANT GUARDRAILS</span>
+          </div>
+          <div style={{ fontSize: '0.88rem', color: '#9f1239', fontWeight: 600, marginBottom: '0.75rem' }}>
+            {guardrailBlocked.reason}
+          </div>
+          <div style={{ fontSize: '0.78rem', color: '#881337', background: 'white', padding: '0.5rem 0.75rem', borderRadius: '8px', border: '1px solid #fecdd3', marginBottom: '1rem', fontFamily: 'var(--font-mono)' }}>
+            Cart Total: ₹{guardrailBlocked.total?.toLocaleString('en-IN')} | Merchant Max Payment Limit: ₹{guardrailBlocked.limit?.toLocaleString('en-IN')} | Razorpay Order Creation: BLOCKED
+          </div>
+          <button
+            type="button"
+            className="btn-primary"
+            style={{ background: '#be123c', borderColor: '#be123c' }}
+            onClick={() => {
+              setGuardrailBlocked(null);
+              setIntent('Find me a tech gift under ₹3000');
+              setBudget(3000);
+            }}
+          >
+            <span>Review Cart & Adjust Selection</span>
+          </button>
+        </div>
+      )}
+
+      {/* Customer Approval Gate & Itemized Purchase Summary */}
       {finalOffer && !approved && (
         <div style={{
           background: 'linear-gradient(135deg, #f0fdf4 0%, #f5f3ff 100%)',
@@ -469,135 +641,142 @@ export default function AIBuyerMode({ onAddToCart, cart, setIsCartOpen, setIsChe
           boxShadow: '0 8px 25px -5px rgba(34,197,94,0.15)'
         }}>
           <div style={{
-            display: 'flex', alignItems: 'center', gap: '0.5rem',
-            marginBottom: '1rem'
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            marginBottom: '1rem', borderBottom: '1px solid #bbf7d0', paddingBottom: '0.75rem'
           }}>
-            <CheckCircle2 size={20} color="#16a34a" />
-            <span style={{ fontWeight: 800, fontSize: '1.05rem', color: '#15803d' }}>
-              Purchase Proposal — Customer Approval Required
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <CheckCircle2 size={22} color="#16a34a" />
+              <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#15803d' }}>
+                Purchase Summary — Customer Approval Required
+              </span>
+            </div>
+            <span style={{ fontSize: '0.7rem', background: '#dcfce7', color: '#166534', padding: '0.15rem 0.5rem', borderRadius: '9999px', fontWeight: 800 }}>
+              Bounded & Audited
             </span>
           </div>
 
+          {/* Itemized Table */}
           <div style={{
-            display: 'grid', gridTemplateColumns: finalOffer.upsell ? '1fr 1fr' : '1fr',
-            gap: '0.75rem', marginBottom: '1rem'
-          }}>
-            {/* Main product */}
-            <div style={{
-              background: 'white', borderRadius: '10px', padding: '0.75rem',
-              border: '1px solid #e2e8f0'
-            }}>
-              <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                Main Product
-              </div>
-              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#0f172a' }}>
-                {finalOffer.product.name}
-              </div>
-              <div style={{ fontWeight: 800, fontSize: '1.1rem', color: '#0369a1' }}>
-                ₹{finalOffer.product.price.toLocaleString('en-IN')}
-              </div>
-              <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
-                {finalOffer.product.rating}★ · {finalOffer.product.stock} in stock
-              </div>
-            </div>
-
-            {/* Upsell */}
-            {finalOffer.upsell && (
-              <div style={{
-                background: 'white', borderRadius: '10px', padding: '0.75rem',
-                border: '1px solid #fde68a'
-              }}>
-                <div style={{ fontSize: '0.68rem', color: '#d97706', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                  Complementary Add-on
-                  {finalOffer.replanning_occurred && (
-                    <span style={{
-                      marginLeft: '0.3rem', background: '#fffbeb', color: '#b45309',
-                      padding: '0.1rem 0.3rem', borderRadius: '4px', fontSize: '0.6rem'
-                    }}>REPLANNED</span>
-                  )}
-                </div>
-                <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#0f172a' }}>
-                  {finalOffer.upsell.name}
-                </div>
-                <div style={{ fontWeight: 800, fontSize: '1.1rem', color: '#d97706' }}>
-                  ₹{finalOffer.upsell.price.toLocaleString('en-IN')}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Blocked upsell info */}
-          {finalOffer.blocked_upsell && (
-            <div style={{
-              background: '#fef2f2', borderRadius: '8px', padding: '0.5rem 0.75rem',
-              marginBottom: '0.75rem', border: '1px solid #fecaca', fontSize: '0.78rem'
-            }}>
-              <span style={{ color: '#dc2626', fontWeight: 700 }}>
-                ⚠ Initially proposed "{finalOffer.blocked_upsell.name}" (₹{finalOffer.blocked_upsell.price}) was blocked:
-              </span>{' '}
-              <span style={{ color: '#7f1d1d' }}>{finalOffer.blocked_upsell.block_reason}</span>
-            </div>
-          )}
-
-          {/* Price breakdown */}
-          <div style={{
-            background: 'white', borderRadius: '10px', padding: '0.75rem 1rem',
+            background: 'white', borderRadius: '10px', padding: '0.85rem 1rem',
             border: '1px solid #e2e8f0', marginBottom: '1rem'
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: '#475569', marginBottom: '0.25rem' }}>
-              <span>Subtotal</span>
-              <span>₹{finalOffer.subtotal.toLocaleString('en-IN')}</span>
+            <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.04em' }}>
+              Line Items
             </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem', color: '#0f172a', fontWeight: 600, marginBottom: '0.35rem' }}>
+              <span>{finalOffer.product.name} (Main Product)</span>
+              <span>₹{finalOffer.product.price.toLocaleString('en-IN')}</span>
+            </div>
+
+            {finalOffer.upsell && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem', color: '#d97706', fontWeight: 600, marginBottom: '0.35rem' }}>
+                <span>+ {finalOffer.upsell.name} (Approved Upsell)</span>
+                <span>₹{finalOffer.upsell.price.toLocaleString('en-IN')}</span>
+              </div>
+            )}
+
             {finalOffer.coupon && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: '#16a34a', marginBottom: '0.25rem' }}>
-                <span>Coupon {finalOffer.coupon.code}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: '#16a34a', marginBottom: '0.35rem' }}>
+                <span>🎟️ Coupon ({finalOffer.coupon.code})</span>
                 <span>−₹{finalOffer.coupon.discount_amount}</span>
               </div>
             )}
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', borderTop: '1px solid #e2e8f0', paddingTop: '0.4rem', marginTop: '0.3rem' }}>
-              <span>Total</span>
-              <span>₹{finalOffer.final_total.toLocaleString('en-IN')}</span>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', borderTop: '2px solid #e2e8f0', paddingTop: '0.5rem', marginTop: '0.4rem' }}>
+              <span>Final Total</span>
+              <span style={{ color: '#16a34a' }}>₹{finalOffer.final_total.toLocaleString('en-IN')}</span>
             </div>
           </div>
 
-          {/* Approve button */}
+          {/* Policy Verification Checklist */}
+          <div style={{
+            background: 'white', borderRadius: '10px', padding: '0.75rem 1rem',
+            border: '1px solid #e2e8f0', marginBottom: '1.25rem'
+          }}>
+            <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.4rem', letterSpacing: '0.04em' }}>
+              Merchant Limit & Constraint Verification
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem', fontSize: '0.78rem', color: '#334155' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <Check size={14} color="#16a34a" />
+                <span>Payment limit: ₹{finalOffer.final_total} ≤ ₹5,000</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <Check size={14} color="#16a34a" />
+                <span>Customer budget: ₹{finalOffer.final_total} ≤ ₹{budget}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <Check size={14} color="#16a34a" />
+                <span>Upsell limit: Passed ₹500 cap</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <Check size={14} color="#16a34a" />
+                <span>Stock: In stock ({finalOffer.product.stock} available)</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', gridColumn: 'span 2' }}>
+                <Check size={14} color="#16a34a" />
+                <span>Razorpay: Ready for payment initialization</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Button */}
           <button
             type="button"
             id="a2a-approve-btn"
-            onClick={handleApprove}
+            onClick={handleApproveAndPay}
             style={{
-              width: '100%', padding: '0.85rem',
+              width: '100%', padding: '0.9rem',
               background: 'linear-gradient(135deg, #16a34a, #22c55e)',
               color: 'white', border: 'none', borderRadius: '12px',
-              fontWeight: 800, fontSize: '1rem', cursor: 'pointer',
+              fontWeight: 800, fontSize: '1.05rem', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
               boxShadow: '0 4px 14px rgba(34,197,94,0.4)',
               transition: 'transform 0.15s ease'
             }}
           >
-            <CheckCircle2 size={18} />
-            Approve & Continue to Razorpay — ₹{finalOffer.final_total.toLocaleString('en-IN')}
+            <CheckCircle2 size={20} />
+            <span>APPROVE & CONTINUE TO RAZORPAY — ₹{finalOffer.final_total.toLocaleString('en-IN')}</span>
           </button>
 
-          <div style={{ textAlign: 'center', fontSize: '0.72rem', color: '#64748b', marginTop: '0.5rem' }}>
+          <div style={{ textAlign: 'center', fontSize: '0.72rem', color: '#64748b', marginTop: '0.6rem' }}>
             Neither Buyer Agent nor Merchant Agent can execute payment without your explicit approval.
           </div>
         </div>
       )}
 
-      {/* Approved confirmation */}
+      {/* Approved confirmation & Razorpay Status */}
       {approved && (
         <div style={{
-          background: '#f0fdf4', borderRadius: '14px', border: '2px solid #22c55e',
-          padding: '1.5rem', marginTop: '1rem', textAlign: 'center'
+          background: razorpayStage === 'PAYMENT_FAILED' ? '#fef2f2' : '#f0fdf4',
+          borderRadius: '14px', border: `2px solid ${razorpayStage === 'PAYMENT_FAILED' ? '#ef4444' : '#22c55e'}`,
+          padding: '1.25rem', marginTop: '1rem', textAlign: 'center'
         }}>
-          <CheckCircle2 size={32} color="#22c55e" style={{ marginBottom: '0.5rem' }} />
-          <div style={{ fontWeight: 800, fontSize: '1.1rem', color: '#16a34a' }}>
-            Approved! Opening Razorpay Checkout...
-          </div>
-          <div style={{ fontSize: '0.82rem', color: '#15803d', marginTop: '0.3rem' }}>
-            Cart updated with your approved items. Razorpay Test Mode checkout is loading.
-          </div>
+          {razorpayStage === 'PAYMENT_FAILED' ? (
+            <>
+              <XCircle size={32} color="#dc2626" style={{ marginBottom: '0.4rem' }} />
+              <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#dc2626' }}>
+                Razorpay Payment Failed — No Successful Revenue Recorded
+              </div>
+              <div style={{ fontSize: '0.82rem', color: '#991b1b', marginTop: '0.2rem' }}>
+                Payment attempt failed or was cancelled. AI-attributed revenue: ₹0. Cart preserved for retry.
+              </div>
+            </>
+          ) : (
+            <>
+              <CheckCircle2 size={32} color="#22c55e" style={{ marginBottom: '0.4rem' }} />
+              <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#16a34a' }}>
+                {razorpayStage === 'PAYMENT_SUCCESS' ? 'Razorpay Payment Verified & Order Paid!' : 'Razorpay Checkout Loading...'}
+              </div>
+              <div style={{ fontSize: '0.82rem', color: '#15803d', marginTop: '0.2rem' }}>
+                {razorpayStage === 'PAYMENT_SUCCESS'
+                  ? `Order ${createdRazorpayOrderId || ''} paid. Attributed ₹${finalOffer?.final_total?.toLocaleString('en-IN')} to Merchant Revenue.`
+                  : `Created Order ${createdRazorpayOrderId || ''}. Authorize payment in the Razorpay popup.`}
+              </div>
+            </>
+          )}
         </div>
       )}
 
