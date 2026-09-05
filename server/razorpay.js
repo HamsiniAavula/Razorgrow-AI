@@ -139,8 +139,9 @@ class RazorpayService {
     try {
       // Use Buffer directly if available, otherwise string
       const bodyData = Buffer.isBuffer(rawBody) ? rawBody : Buffer.from(rawBody, 'utf-8');
+      const secret = process.env.RAZORPAY_WEBHOOK_SECRET || WEBHOOK_SECRET;
       const expectedSignature = crypto
-        .createHmac('sha256', WEBHOOK_SECRET)
+        .createHmac('sha256', secret)
         .update(bodyData)
         .digest('hex');
 

@@ -1249,6 +1249,70 @@
   ],
   "ai_actions": [
     {
+      "id": "act_1788591338772_4060",
+      "timestamp": "2026-09-05T06:55:38.772Z",
+      "confidence": 1,
+      "order_id": "order_test_fail_02",
+      "session_id": "webhook_listener",
+      "action_type": "PAYMENT_FAILED",
+      "status": "FAILED",
+      "reason": "Webhook reported payment.failed: Payment was declined by issuing bank",
+      "input_summary": "Webhook event: payment.failed, ID: evt_fail_1788591338769",
+      "output_summary": "Order order_test_fail_02 marked PAYMENT_FAILED. AI Attributed Revenue: ₹0",
+      "evidence": "Error Code: BAD_REQUEST_ERROR, Reason: Payment was declined by issuing bank",
+      "policy_checks": {
+        "zero_revenue_on_failure": true
+      }
+    },
+    {
+      "id": "act_1788591338762_1931",
+      "timestamp": "2026-09-05T06:55:38.762Z",
+      "confidence": 1,
+      "order_id": "order_test_webhook_01",
+      "session_id": "webhook_listener",
+      "action_type": "REVENUE_ATTRIBUTED",
+      "status": "SUCCESS",
+      "reason": "AI revenue attributed from verified webhook capture.",
+      "input_summary": "Order: order_test_webhook_01, Amount: ₹2499.00",
+      "output_summary": "Credited ₹2499.00 to merchant revenue metrics",
+      "evidence": "Captured webhook event: evt_1788591338756",
+      "policy_checks": {
+        "captured_payment_only": true
+      }
+    },
+    {
+      "id": "act_1788591338760_7085",
+      "timestamp": "2026-09-05T06:55:38.760Z",
+      "confidence": 1,
+      "order_id": "order_test_webhook_01",
+      "session_id": "webhook_listener",
+      "action_type": "PAYMENT_VERIFIED",
+      "status": "SUCCESS",
+      "reason": "Webhook confirmed payment.captured for order_test_webhook_01.",
+      "input_summary": "Webhook event: payment.captured, ID: evt_1788591338756",
+      "output_summary": "Order marked PAID, Payment ID: pay_test_1788591338756",
+      "evidence": "Razorpay event signature verified. Amount: ₹2499.00",
+      "policy_checks": {
+        "webhook_verified": true,
+        "duplicate_guarded": true
+      }
+    },
+    {
+      "id": "act_1788591338753_9057",
+      "timestamp": "2026-09-05T06:55:38.753Z",
+      "confidence": 1,
+      "session_id": "webhook_listener",
+      "action_type": "WEBHOOK_REJECTED",
+      "status": "FAILED",
+      "reason": "Webhook signature verification failed — invalid HMAC",
+      "input_summary": "Signature: invalid_hex_sign...",
+      "output_summary": "Webhook rejected with 400",
+      "evidence": "HMAC-SHA256 digest did not match expected",
+      "policy_checks": {
+        "signature_valid": false
+      }
+    },
+    {
       "id": "act_1788589509093_1871",
       "timestamp": "2026-09-05T06:25:09.093Z",
       "confidence": 1,
@@ -8829,6 +8893,26 @@
     }
   ],
   "payment_events": [
+    {
+      "id": "pevt_1788591338769_396",
+      "timestamp": "2026-09-05T06:55:38.769Z",
+      "order_id": "order_test_fail_02",
+      "razorpay_event_id": "evt_fail_1788591338769",
+      "event_type": "payment.failed",
+      "status": "FAILED",
+      "amount": 199900,
+      "error": "Payment was declined by issuing bank"
+    },
+    {
+      "id": "pevt_1788591338757_527",
+      "timestamp": "2026-09-05T06:55:38.757Z",
+      "order_id": "order_test_webhook_01",
+      "razorpay_event_id": "evt_1788591338756",
+      "event_type": "payment.captured",
+      "status": "SUCCESS",
+      "amount": 249900,
+      "error": null
+    },
     {
       "id": "pevt_1788589180993_122",
       "timestamp": "2026-09-05T06:19:40.993Z",
