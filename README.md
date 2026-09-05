@@ -9,6 +9,27 @@ By orchestrating structured negotiation between a **Customer-side Buyer Agent** 
 
 ---
 
+## 📍 Table of Contents
+- [Features At A Glance](#features-at-a-glance)
+- [Problem Statement](#problem-statement)
+- [Objectives](#objectives)
+- [Key / Unique Features](#key--unique-features)
+- [How the System Works](#how-the-system-works)
+- [Architecture](#architecture)
+- [Agent-to-Agent Communication](#agent-to-agent-communication)
+- [AI Safety & Financial Guardrails](#ai-safety--financial-guardrails)
+- [Razorpay Webhook Integration](#razorpay-webhook-integration)
+- [Tech Stack](#tech-stack)
+- [Current Deployment](#current-deployment)
+- [Run Locally](#run-locally)
+- [Environment Variables](#environment-variables)
+- [Recommended Demo Walkthrough](#recommended-demo-6-step-walkthrough-for-judges)
+- [Project Structure](#project-structure)
+- [Future Scope](#future-scope)
+- [Links](#links)
+
+---
+
 ## Features At A Glance
 
 - **🤖 Two-Sided Agentic Commerce**: Autonomous negotiation between a Buyer Agent (representing customer constraints) and a Merchant Agent (representing product & pricing logic).
@@ -187,7 +208,8 @@ Agents communicate by exchanging structured, schema-validated JSON message objec
 - `REVISED_OFFER`: Sent by Merchant Agent upon replanning (`action: 'REPLAN'`).
 - `BUYER_EVALUATION`: Emitted by Buyer Agent (`verdict: 'ACCEPT'` or `'REJECT'`).
 
-### Example JSON Exchange Snippet
+<details>
+<summary>🔍 <b>View Example JSON Protocol Message Exchange</b></summary>
 
 ```json
 // BUYER AGENT → MERCHANT AGENT
@@ -199,15 +221,46 @@ Agents communicate by exchanging structured, schema-validated JSON message objec
   "constraints": { "budget_max": 3000, "currency": "INR" }
 }
 
+// MERCHANT AGENT → BUYER AGENT (Initial Offer)
+{
+  "type": "COMMERCE_OFFER",
+  "from_agent": "MERCHANT_AGENT",
+  "to_agent": "BUYER_AGENT",
+  "product": { "id": "prod_earbuds_02", "name": "Wireless Earbuds", "price": 1999 },
+  "upsell": { "id": "prod_premiumpack_12", "name": "Premium Gift Box", "price": 899 }
+}
+
 // POLICY ENGINE → MERCHANT AGENT (Guardrail Check)
 {
   "type": "POLICY_RESULT",
   "from_agent": "POLICY_ENGINE",
+  "to_agent": "MERCHANT_AGENT",
   "result": "BLOCKED",
   "code": "EXCEEDS_MAX_UPSELL",
   "reason": "Upsell price (₹899) exceeds merchant maximum limit of ₹500."
 }
+
+// MERCHANT AGENT → BUYER AGENT (Replanned Offer)
+{
+  "type": "REVISED_OFFER",
+  "from_agent": "MERCHANT_AGENT",
+  "to_agent": "BUYER_AGENT",
+  "action": "REPLAN",
+  "product": { "id": "prod_earbuds_02", "name": "Wireless Earbuds", "price": 1999 },
+  "upsell": { "id": "prod_giftbox_04", "name": "Gift Packaging", "price": 199 }
+}
+
+// BUYER AGENT → CUSTOMER (Verdict)
+{
+  "type": "BUYER_EVALUATION",
+  "from_agent": "BUYER_AGENT",
+  "to_agent": "CUSTOMER",
+  "verdict": "ACCEPT",
+  "reason": "Offer satisfies customer budget ceiling of ₹3,000. Total: ₹1,979."
+}
 ```
+
+</details>
 
 ---
 
@@ -308,7 +361,8 @@ Copy `.env.example` to `.env` in the root directory:
 cp .env.example .env
 ```
 
-### Reference Variables (`.env.example`)
+<details>
+<summary>⚙️ <b>View Full Environment Variables Specification (.env.example)</b></summary>
 
 ```env
 # Backend Server Port (Private/Backend)
@@ -330,6 +384,8 @@ VITE_BACKEND_URL=https://razorgrow-ai-iez3.onrender.com
 
 > **Note:** Never commit your actual `.env` file containing secrets to Git.
 
+</details>
+
 ---
 
 ## Recommended Demo (6-Step Walkthrough for Judges)
@@ -344,6 +400,9 @@ VITE_BACKEND_URL=https://razorgrow-ai-iez3.onrender.com
 ---
 
 ## Project Structure
+
+<details>
+<summary>📁 <b>View Full Project Directory Structure</b></summary>
 
 ```
 Razorgrow-AI/
@@ -372,6 +431,8 @@ Razorgrow-AI/
 ├── package.json                 # Root Scripts
 └── README.md
 ```
+
+</details>
 
 ---
 
